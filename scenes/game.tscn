@@ -16,17 +16,18 @@ position_smoothing_enabled = true
 [node name="Terrain" type="Node2D" parent="Node2D" unique_id=2117986526]
 
 [node name="Ground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=149897057]
-tile_map_data = PackedByteArray("AAABAPr/AAAAAAAAAAACAPr/AAAAAAAAAAADAPr/AAAAAAAAAAAEAPn/AAAAAAAAAAAFAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPj/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAPAPr/AAAAAAAAAAAQAPr/AAAAAAAAAAAGAPn/AAAAAAEAAAAHAPn/AAAAAAEAAAAIAPn/AAAAAAEAAAAJAPn/AAAAAAEAAAAKAPn/AAAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAABAPr/AAAAAAAAAAADAPr/AAAAAAAAAAAEAPn/AAAAAAAAAAAFAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPj/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAPAPr/AAAAAAAAAAAQAPr/AAAAAAAAAAAGAPn/AAAAAAEAAAAHAPn/AAAAAAEAAAAIAPn/AAAAAAEAAAAJAPn/AAAAAAEAAAAKAPn/AAAAAAEAAAACAPr/AAAAAAAAAAA=")
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Underground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=1655468512]
-modulate = Color(1, 1, 1, 0.42745098)
+modulate = Color(1, 1, 1, 0.49803922)
 tile_map_data = PackedByteArray("AAAJAP//AAABAAAAAAAJAP7/AAABAAAAAAAJAP3/AAABAAAAAAAJAPz/AAABAAAAAAA=")
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
 
-[node name="Player" parent="Node2D" unique_id=1758160856 node_paths=PackedStringArray("ground_tm", "underground_tm") instance=ExtResource("2_lnu2h")]
+[node name="Player" parent="Node2D" unique_id=1758160856 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm") instance=ExtResource("2_lnu2h")]
+current_tm = NodePath("../Terrain/Ground")
 ground_tm = NodePath("../Terrain/Ground")
 underground_tm = NodePath("../Terrain/Underground")
 
