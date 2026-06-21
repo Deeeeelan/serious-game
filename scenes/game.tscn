@@ -39,5 +39,5 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_lbhrr")
 
-[node name="Gear" type="Node2D" parent="." unique_id=828720337]
+[node name="GearManager" type="Node2D" parent="." unique_id=828720337]
 script = ExtResource("1_xwrxv")
