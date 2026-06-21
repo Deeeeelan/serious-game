@@ -1,3 +1,8 @@
 [gd_scene format=3 uid="uid://chqy7u7nlutr1"]
 
+[ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear.gd" id="1_uwrxv"]
+
 [node name="Game" type="Node" unique_id=384866855]
+
+[node name="Gear" type="Node2D" parent="." unique_id=828720337]
+script = ExtResource("1_uwrxv")
