@@ -1,3 +1,44 @@
-[gd_scene format=3 uid="uid://chqy7u7nlutr1"]
+[gd_scene format=4 uid="uid://chqy7u7nlutr1"]
+
+[ext_resource type="TileSet" uid="uid://b18owb3f4k60j" path="res://assets/tile_set.tres" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://baocvcmb0aqeb" path="res://scripts/player_movement.gd" id="2_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="2_yqjtg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
 
 [node name="Game" type="Node" unique_id=384866855]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=348159224]
+
+[node name="Ground" type="TileMapLayer" parent="Node2D" unique_id=149897057]
+tile_map_data = PackedByteArray("AAABAPr/AAAAAAAAAAACAPr/AAAAAAAAAAADAPr/AAAAAAAAAAAEAPn/AAAAAAAAAAAFAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPj/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAPAPr/AAAAAAAAAAAQAPr/AAAAAAAAAAA=")
+tile_set = ExtResource("1_uwrxv")
+
+[node name="Underground" type="TileMapLayer" parent="Node2D" unique_id=1655468512]
+modulate = Color(1, 1, 1, 0.42745098)
+tile_map_data = PackedByteArray("AAAJAP//AAABAAAAAAAJAP7/AAABAAAAAAAJAP3/AAABAAAAAAAJAPz/AAABAAAAAAA=")
+tile_set = ExtResource("1_uwrxv")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1781699979]
+script = ExtResource("2_lnu2h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=1312474150]
+shape = SubResource("CircleShape2D_8tn5n")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/CharacterBody2D" unique_id=1696736246]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_yqjtg")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/CharacterBody2D" unique_id=1369795743]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="Node2D" unique_id=1746627479]
+position_smoothing_enabled = true
+
+[node name="Control" type="Control" parent="." unique_id=1859199551]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

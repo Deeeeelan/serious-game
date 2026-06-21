@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" format=3 uid="uid://b18owb3f4k60j"]
+
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/spritemap.png" id="1_eslq1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ki5qi"]
+texture = ExtResource("1_eslq1")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_ki5qi")
