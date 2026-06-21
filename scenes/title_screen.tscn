@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbjxrtbe8nvgs"]
 
 [ext_resource type="Script" uid="uid://5ew5fgjg4wqt" path="res://scripts/title_screen.gd" id="1_fgkus"]
+[ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="2_sa3yf"]
 
 [node name="TitleScreen" type="Node" unique_id=1581331194 node_paths=PackedStringArray("start_button")]
 script = ExtResource("1_fgkus")
@@ -13,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_sa3yf")
 
 [node name="StartButton" type="Button" parent="Control" unique_id=266650551]
 layout_mode = 1
