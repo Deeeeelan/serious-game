@@ -5,6 +5,8 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+
 [node name="Player" type="CharacterBody2D" unique_id=1758160856]
 script = ExtResource("1_sysx0")
 
@@ -17,3 +19,7 @@ texture = ExtResource("2_y07ac")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="." unique_id=529309522]
 remote_path = NodePath("../../Camera2D")
+
+[node name="Holding" type="Sprite2D" parent="." unique_id=718252690]
+position = Vector2(0, -32)
+texture = SubResource("AtlasTexture_6sj1v")

@@ -9,8 +9,6 @@
 
 [node name="Node2D" type="Node2D" parent="." unique_id=348159224]
 
-[node name="Player" parent="Node2D" unique_id=1758160856 instance=ExtResource("2_lnu2h")]
-
 [node name="Camera2D" type="Camera2D" parent="Node2D" unique_id=1746627479]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
@@ -18,7 +16,7 @@ position_smoothing_enabled = true
 [node name="Terrain" type="Node2D" parent="Node2D" unique_id=2117986526]
 
 [node name="Ground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=149897057]
-tile_map_data = PackedByteArray("AAABAPr/AAAAAAAAAAACAPr/AAAAAAAAAAADAPr/AAAAAAAAAAAEAPn/AAAAAAAAAAAFAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPj/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAPAPr/AAAAAAAAAAAQAPr/AAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAPr/AAAAAAAAAAACAPr/AAAAAAAAAAADAPr/AAAAAAAAAAAEAPn/AAAAAAAAAAAFAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPj/AAAAAAAAAAAEAPr/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAPAPr/AAAAAAAAAAAQAPr/AAAAAAAAAAAGAPn/AAAAAAEAAAAHAPn/AAAAAAEAAAAIAPn/AAAAAAEAAAAJAPn/AAAAAAEAAAAKAPn/AAAAAAEAAAA=")
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Underground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=1655468512]
@@ -27,6 +25,10 @@ tile_map_data = PackedByteArray("AAAJAP//AAABAAAAAAAJAP7/AAABAAAAAAAJAP3/AAABAAA
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
+
+[node name="Player" parent="Node2D" unique_id=1758160856 node_paths=PackedStringArray("ground_tm", "underground_tm") instance=ExtResource("2_lnu2h")]
+ground_tm = NodePath("../Terrain/Ground")
+underground_tm = NodePath("../Terrain/Underground")
 
 [node name="Control" type="Control" parent="." unique_id=1859199551]
 layout_mode = 3
