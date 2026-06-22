@@ -77,12 +77,16 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("switch_layer") and not carrying:
 		if current_tm == ground_tm:
 			current_tm = underground_tm
-			ground_tm.modulate = Color(1.0, 1.0, 1.0, 0.5)
-			underground_tm.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(true)
+			tween.tween_property(ground_tm, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.2)
+			tween.tween_property(underground_tm, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
+			tween.play()
 		else:
 			current_tm = ground_tm
-			ground_tm.modulate = Color(1.0, 1.0, 1.0, 1.0)
-			underground_tm.modulate = Color(1.0, 1.0, 1.0, 0.5)
+			var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(true)
+			tween.tween_property(ground_tm, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
+			tween.tween_property(underground_tm, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.2)
+			tween.play()
 
 func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()
