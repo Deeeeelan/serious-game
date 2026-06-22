@@ -1,60 +1,73 @@
 extends Node2D
 
-@export var components: Dictionary = {}
+var components: Dictionary[Vector2i,Component] = {}
 var gears: Dictionary = {}
-var generators: Dictionary = {1:[10, 50], 2:[20, 100]}
-#const OBJECTS = {0:"gear", 1:"testRotSource", 2:"testBigRotSource"}
+var generators: Dictionary = {}
+var genInfo: Dictionary = {1:{"speed":10, "torque":50}, 2:{"speed":20, "torque":100}}
 @onready var player: CharacterBody2D = $"../Node2D/Player"
 @onready var underground: TileMapLayer = $"../Node2D/Terrain/Underground"
 
+class Component:
+	var size: int = 32
+	var speed: int = 0
+	var torque: int = 0
+	var isGenerator: bool = false
+	
+	func _init(siz, spee, torqu, isGenerato) -> void:
+		self.size = siz
+		self.speed = spee
+		self.torque = torqu
+		self.isGenerator = isGenerato
+
+@warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
-	for componentCoords in components:
-		var component = components[componentCoords]
-
-		underground.set_cell(componentCoords, 0, Vector2i(1, component))
-		
-		if gears.has(componentCoords) and gears[componentCoords][2] == true:
-			underground.set_cell(componentCoords, 0, Vector2i(0, component))
-
-		if component == 0:
-			#each gear has data of [speed, torque, active]
-			gears[componentCoords] = [0, 0, false]
-
-		if component == 1:
-			var genInfo = generators[component]
-			#each generator has data of [speed, torque], defined by its id
-			for coords in findConnectedComponents(componentCoords):
-				gears[coords] = [genInfo[0], genInfo[1], true]
+	pass
 
 func findConnectedComponents(startPoint: Vector2i) -> Array:
-	var componentStack: Array = [startPoint]
-	var resultStack = []
-	var index = 0
+	var componentStack: Array[Vector2i] = [startPoint]
+	var index: int = 0
 	
-	while componentStack:
-		var node = componentStack.pop_front()
+	while componentStack.size() > index:
+		var node: Vector2i = componentStack.pop_front()
 
-		if components.has(node + Vector2i.UP):
+		if components.has(node + Vector2i.UP) and (node + Vector2i.UP) not in componentStack:
 			componentStack.append(node + Vector2i.UP)
-			resultStack.append(componentStack[-1])
-		if components.has(node + Vector2i.RIGHT):
+		if components.has(node + Vector2i.RIGHT) and (node + Vector2i.UP) not in componentStack:
 			componentStack.append(node + Vector2i.RIGHT)
-			resultStack.append(componentStack[-1])
-		if components.has(node + Vector2i.DOWN):
+		if components.has(node + Vector2i.DOWN) and (node + Vector2i.UP) not in componentStack:
 			componentStack.append(node + Vector2i.DOWN)
-			resultStack.append(componentStack[-1])
-		if components.has(node + Vector2i.LEFT):
+		if components.has(node + Vector2i.LEFT) and (node + Vector2i.UP) not in componentStack:
 			componentStack.append(node + Vector2i.LEFT)
-			resultStack.append(componentStack[-1])
-
-	return resultStack
+		
+		print(componentStack)
+		index += 1
+	return componentStack
 
 func _input(event: InputEvent) -> void:
-	var playerIntCoords: Vector2i = Vector2i(player.position) / 32
+	var playerTilemapCoords: Vector2i = underground.local_to_map(player.position)
 
 	if event.is_action_pressed("placeGear"):
-		print(playerIntCoords, "placed Gear")
-		components[playerIntCoords] = 0
+		print(playerTilemapCoords, "placed Gear")
+		#components[playerTilemapCoords] = 0
+		gears[playerTilemapCoords] = [0, 0, false]
+		updateGearRendering()
 	if event.is_action_pressed("placeTestGen"):
-		print(playerIntCoords, "placed Gen")
-		components[playerIntCoords] = 1
+		print(playerTilemapCoords, "placed Gen")
+		#components[playerTilemapCoords] = 1
+		
+		updateGearRendering()
+		#updateGearLogic()
+
+func updateGearRendering() -> void:
+	for gearCoords in gears:
+		underground.set_cell(gearCoords, 0, Vector2i(0, 0))
+		
+		if gears.has(gearCoords) and gears[gearCoords][2] == true:
+			underground.set_cell(gearCoords, 0, Vector2i(1, 0))
+
+#func updateGearLogic() -> void:
+	#for componentCoords in components:
+		#var component = components[componentCoords]
+#
+		#for coords in findConnectedComponents(componentCoords):
+			#gears[coords] = [genInfo[0], genInfo[1], true]

@@ -45,7 +45,6 @@ theme = ExtResource("3_lbhrr")
 
 [node name="GearManager" type="Node2D" parent="." unique_id=828720337]
 script = ExtResource("1_xwrxv")
-components = {}
 
 [node name="BuildingManager" type="Node2D" parent="." unique_id=1496524635]
 script = ExtResource("5_iywne")
