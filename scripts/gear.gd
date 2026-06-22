@@ -2,26 +2,44 @@ extends Node2D
 
 @export
 var components = {}
-const OBJECTS = {0:"gear", 1:"testRotSource"}
+var gears = {}
+var generators = {1:[10, 50], 2:[20, 100]}
+#const OBJECTS = {0:"gear", 1:"testRotSource", 2:"testBigRotSource"}
 @onready var underground: TileMapLayer = $"../Node2D/Terrain/Underground"
 
 	
 func _process(delta: float) -> void:
-	for i in components:
-		underground.set_cell(i, 0, Vector2i(1, components[i]))
-		if components[i] == 1:
-			findConnectedComponents(i)
+	for componentCoords in components:
+		underground.set_cell(componentCoords, 0, Vector2i(1, components[componentCoords]))
 		
+		if components[componentCoords] == 0:
+			#each gear has data of [speed, torque, active]
+			gears[componentCoords] = [0, 0, false]
 		
-func findConnectedComponents(Vector2i) -> void:
-	var componentStack = []
+		if components[componentCoords] == 1:
+			var genInfo = generators[componentCoords]
+			#each generator has data of [speed, torque], defined by its id
+			for coords in findConnectedComponents(componentCoords):
+				gears[coords] = [genInfo[0], genInfo[1], true]
+			
+func findConnectedComponents(startPoint: Vector2i) -> ItemList:
+	var componentStack = [startPoint]
+	var resultStack = []
+	
 	while componentStack:
 		var node = componentStack.pop_front()
-		if components[node + Vector2i.UP]:
+		
+		if components.has(node + Vector2i.UP):
 			componentStack.append(node + Vector2i.UP)
-		if components[node + Vector2i.UP]:
+			resultStack.append(componentStack[-1])
+		if components.has(node + Vector2i.RIGHT):
 			componentStack.append(node + Vector2i.RIGHT)
-		if components[node + Vector2i.UP]:
+			resultStack.append(componentStack[-1])
+		if components.has(node + Vector2i.DOWN):
 			componentStack.append(node + Vector2i.DOWN)
-		if components[node + Vector2i.UP]:
+			resultStack.append(componentStack[-1])
+		if components.has(node + Vector2i.LEFT):
 			componentStack.append(node + Vector2i.LEFT)
+			resultStack.append(componentStack[-1])
+			
+	return resultStack
