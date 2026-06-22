@@ -22,7 +22,6 @@ tile_set = ExtResource("1_uwrxv")
 
 [node name="Underground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=1655468512]
 modulate = Color(1, 1, 1, 0.49803922)
-tile_map_data = PackedByteArray("AAAJAP//AAABAAAAAAAJAP7/AAABAAAAAAAJAP3/AAABAAAAAAAJAPz/AAABAAAAAAA=")
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
@@ -46,6 +45,7 @@ theme = ExtResource("3_lbhrr")
 
 [node name="GearManager" type="Node2D" parent="." unique_id=828720337]
 script = ExtResource("1_xwrxv")
+components = {}
 
 [node name="BuildingManager" type="Node2D" parent="." unique_id=1496524635]
 script = ExtResource("5_iywne")
