@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear.gd" id="1_xwrxv"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
+[ext_resource type="Script" uid="uid://chkqlilwftv4o" path="res://scripts/building_manager.gd" id="5_iywne"]
 
 [node name="Game" type="Node" unique_id=384866855]
 
@@ -45,3 +46,6 @@ theme = ExtResource("3_lbhrr")
 
 [node name="GearManager" type="Node2D" parent="." unique_id=828720337]
 script = ExtResource("1_xwrxv")
+
+[node name="BuildingManager" type="Node2D" parent="." unique_id=1496524635]
+script = ExtResource("5_iywne")
