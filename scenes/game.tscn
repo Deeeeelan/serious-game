@@ -26,10 +26,13 @@ tile_set = ExtResource("1_uwrxv")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
 
-[node name="Player" parent="Node2D" unique_id=1758160856 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm") instance=ExtResource("2_lnu2h")]
+[node name="Player" parent="Node2D" unique_id=1758160856 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm", "debris") instance=ExtResource("2_lnu2h")]
 current_tm = NodePath("../Terrain/Ground")
 ground_tm = NodePath("../Terrain/Ground")
 underground_tm = NodePath("../Terrain/Underground")
+debris = NodePath("../Debris")
+
+[node name="Debris" type="Node2D" parent="Node2D" unique_id=874590904]
 
 [node name="Control" type="Control" parent="." unique_id=1859199551]
 layout_mode = 3

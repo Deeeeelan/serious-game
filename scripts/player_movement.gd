@@ -4,12 +4,23 @@ extends CharacterBody2D
 @export var ground_tm: TileMapLayer
 @export var underground_tm: TileMapLayer
 
+@export var debris: Node2D
+
 @export var carrying := false
 var carrying_data
 
 const TILE_SIZE = 32
 const SPEED = 320.0
 const LERP_SPEED = 0.08
+const THROW_RANGE = 128
+
+var animating_tile_pos = {}
+
+func get_local_constr_mouse_pos() -> Vector2:
+	var mp = get_local_mouse_position()
+	if mp.length() > THROW_RANGE:
+		mp = mp.normalized() * THROW_RANGE
+	return mp
 
 func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var sid := tm.get_cell_source_id(tm_pos)
@@ -30,11 +41,26 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 		tm.set_cell(pos, -1)
 
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
-	if tm.get_cell_source_id(pos) == -1:
+	if tm.get_cell_source_id(pos) == -1 and not pos in animating_tile_pos:
 		carrying = false
+		animating_tile_pos[pos] = true
+		var saved_carrying_data = carrying_data
+		var throw_obj = $Holding.duplicate()
+		debris.add_child(throw_obj)
+		throw_obj.position = position
 		$Holding.texture = null
 		$Aim.texture = null
-		tm.set_cell(pos, 0, carrying_data)
+		var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(throw_obj, "position", current_tm.map_to_local(pos), 0.6)
+		var tween2 = get_tree().create_tween().set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
+		tween2.tween_property(throw_obj, "scale", Vector2(1.2, 1.2), 0.3)
+		tween2.chain().tween_property(throw_obj, "scale", Vector2(1.0, 1.0), 0.3)
+		tween2.play()
+		tween.play()
+		await tween.finished
+		throw_obj.queue_free()
+		tm.set_cell(pos, 0, saved_carrying_data)
+		animating_tile_pos.erase(pos)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
@@ -42,7 +68,7 @@ func _input(event: InputEvent) -> void:
 			var tm_pos = ground_tm.local_to_map(position)
 			carry_at_pos(current_tm, tm_pos)
 		else:
-			var thrw_pos = ground_tm.local_to_map(position + get_local_mouse_position())
+			var thrw_pos = ground_tm.local_to_map(position + get_local_constr_mouse_pos())
 			drop_at_pos(current_tm, thrw_pos)
 	elif event.is_action_pressed("drop"):
 		if carrying:
@@ -59,7 +85,7 @@ func _input(event: InputEvent) -> void:
 			underground_tm.modulate = Color(1.0, 1.0, 1.0, 0.5)
 
 func _process(delta: float) -> void:
-	$Aim.position = get_local_mouse_position()
+	$Aim.position = get_local_constr_mouse_pos()
 
 func _physics_process(delta: float) -> void:
 	
