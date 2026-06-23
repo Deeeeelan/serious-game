@@ -50,15 +50,21 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 # Attempt to carry the tile at pos
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if current_tm.get_cell_source_id(pos) != -1:
-		carrying = true
-		carrying_data = {
-			atcoords = current_tm.get_cell_atlas_coords(pos),
-			sid = current_tm.get_cell_source_id(pos),
-			altid = current_tm.get_cell_alternative_tile(pos)
-		}
-		var img = cell_pos_to_texture(tm, pos)
-		$Holding.texture = img
-		$Aim.texture = img
+		var altcoords = current_tm.get_cell_atlas_coords(pos)
+		if altcoords == Vector2i(1, 3):
+			GameStats.stone += 1
+		elif altcoords == Vector2i(1, 4):
+			GameStats.wood += 1
+		else:
+			carrying = true
+			carrying_data = {
+				atcoords = current_tm.get_cell_atlas_coords(pos),
+				sid = current_tm.get_cell_source_id(pos),
+				altid = current_tm.get_cell_alternative_tile(pos)
+			}
+			var img = cell_pos_to_texture(tm, pos)
+			$Holding.texture = img
+			$Aim.texture = img
 		tm.set_cell(pos, -1)
 
 # Assumes that all terrain will only have collidable objects
@@ -66,7 +72,6 @@ func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
 	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 
 		
 func use_tool(tool: String, pos: Vector2i):
-	print(tool)
 	for dir in CARDINAL_2i_DIRS:
 		var new_pos = pos + dir
 		var altcoords = terrain_tm.get_cell_atlas_coords(new_pos)
