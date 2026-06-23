@@ -26,8 +26,16 @@ func get_local_constr_mouse_pos() -> Vector2:
 # Get the texture of the current cell position
 func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var sid := tm.get_cell_source_id(tm_pos)
-	var src : TileSetAtlasSource = tm.tile_set.get_source(sid) as TileSetAtlasSource
-	var atl_coord := tm.get_cell_atlas_coords(tm_pos)
+	var source = tm.tile_set.get_source(sid)
+	var atl_coord: Vector2i
+	var src : TileSetAtlasSource = tm.tile_set.get_source(0)
+
+	if source is TileSetScenesCollectionSource:
+		atl_coord = source.get_scene_tile_scene(1).instantiate().atlas_texture
+		print(atl_coord)
+
+	else:
+		atl_coord = tm.get_cell_atlas_coords(tm_pos)
 	var rect := src.get_tile_texture_region(atl_coord)
 	var img : Image = src.texture.get_image()
 	var t_img := img.get_region(rect)
@@ -37,7 +45,11 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if current_tm.get_cell_source_id(pos) != -1:
 		carrying = true
-		carrying_data = current_tm.get_cell_atlas_coords(pos)
+		carrying_data = {
+			atcoords = current_tm.get_cell_atlas_coords(pos),
+			sid = current_tm.get_cell_source_id(pos),
+			altid = current_tm.get_cell_alternative_tile(pos)
+		}
 		var img = cell_pos_to_texture(tm, pos)
 		$Holding.texture = img
 		$Aim.texture = img
@@ -65,7 +77,7 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		tween.play()
 		await tween.finished
 		throw_obj.queue_free()
-		tm.set_cell(pos, 0, saved_carrying_data)
+		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
 		animating_tile_pos.erase(pos)
 
 func _input(event: InputEvent) -> void:
