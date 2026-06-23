@@ -47,19 +47,19 @@ func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void:
 		if components.has(componentStack[index] + Vector2i.RIGHT) and componentStack[index] + Vector2i.RIGHT not in componentStack:
 			componentStack.insert(index + 1, componentStack[index] + Vector2i.RIGHT)
 			updateComponent(componentStack[index] + Vector2i.RIGHT, genInfo[genID], startPoint)
-		if components.has(componentStack[index] + Vector2i.DOWN and componentStack[index] + Vector2i.DOWN not in componentStack):
+		if components.has(componentStack[index] + Vector2i.DOWN) and componentStack[index] + Vector2i.DOWN not in componentStack:
 			componentStack.insert(index + 1, componentStack[index] + Vector2i.DOWN)
 			updateComponent(componentStack[index] + Vector2i.DOWN, genInfo[genID], startPoint)
-		if components.has(componentStack[index] + Vector2i.LEFT and componentStack[index] + Vector2i.LEFT not in componentStack):
+		if components.has(componentStack[index] + Vector2i.LEFT) and componentStack[index] + Vector2i.LEFT not in componentStack:
 			componentStack.insert(index + 1, componentStack[index] + Vector2i.LEFT)
 			updateComponent(componentStack[index] + Vector2i.LEFT, genInfo[genID], startPoint)
-		if components.has(componentStack[index] + Vector2i.UP and componentStack[index] + Vector2i.UP not in componentStack):
+		if components.has(componentStack[index] + Vector2i.UP) and componentStack[index] + Vector2i.UP not in componentStack:
 			componentStack.insert(index + 1, componentStack[index] + Vector2i.UP)
 			updateComponent(componentStack[index] + Vector2i.UP, genInfo[genID], startPoint)
 		
 		index += 1
 	
-func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary[String,int], currentGenPos: Vector2i) -> void:
+func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, currentGenPos: Vector2i) -> void:
 	var component: Component = components[componentPos]
 	var genSpeed: int = currentGenInfo["speed"]
 	var genTorque: int = currentGenInfo["torque"]
@@ -90,7 +90,8 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 			gears.append(playerTilemapCoords)
 			components[playerTilemapCoords] = Component.new()
 		updateGearRendering()
-	
+		updateGearLogic()
+
 	if event.is_action_pressed("placeTestGen"):##testing version of placing generator
 		if playerTilemapCoords in gears:
 			gears.erase(playerTilemapCoords)
@@ -104,15 +105,17 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 			components[playerTilemapCoords] = Component.new(32, 10, 50, 1)
 		
 		updateGearRendering()
-		#updateGearLogic()
+		updateGearLogic()
 
 func updateGearRendering() -> void:
 	for componentCoords in components:
 		var component: Component = components[componentCoords]
-		underground.set_cell(componentCoords, 0, Vector2i(0, component.genID))
+		
 		
 		if component.genID == 0 and component.speed != 0:
 			underground.set_cell(componentCoords, 0, Vector2i(1, 0))
+		else:
+			underground.set_cell(componentCoords, 0, Vector2i(0, component.genID))
 
 func updateGearLogic() -> void:
 	for gearPos in gears:
