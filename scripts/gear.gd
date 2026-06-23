@@ -26,13 +26,13 @@ class Component: ##use visual speed when rendering components
 		if genID == 0:
 			firstCheck = true
 
-	func resetTo(siz = 32, spee = 0, torqu = 0, genI = 0) -> void:
+	func resetTo(siz = 32, spee = 0, torqu = 0, genI = 0, updateFirstCheck = true) -> void:
 		self.size = siz
 		self.speed = spee
 		self.torque = torqu
 		self.genID = genI
 		self.visualSpeed = self.speed
-		if genID == 0:
+		if genID == 0 and updateFirstCheck:
 			firstCheck = true
 
 @warning_ignore("unused_parameter")
@@ -66,9 +66,10 @@ func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, current
 	
 	if component.genID == 0: #object is gear
 		if component.firstCheck == true:
-			component.resetTo(component.size, genSpeed, genTorque, 0)
+			component.resetTo(component.size, genSpeed, genTorque, 0, false)
+			component.firstCheck = false
 		else:
-			component.resetTo(component.size, max(genSpeed, component.speed), genTorque + component.torque, 0)
+			component.resetTo(component.size, max(genSpeed, component.speed), genTorque + component.torque, 0, false)
 	else: #object is other generator, update visual speed
 		if component.speed > components[currentGenPos].speed:
 			components[currentGenPos].visualSpeed = component.speed
@@ -79,33 +80,13 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 	var playerTilemapCoords: Vector2i = underground.local_to_map(player.position)
 
 	if event.is_action_pressed("placeGear"): ##testing version of placing gear
-		if playerTilemapCoords in generators:
-			generators.erase(playerTilemapCoords)
-			gears.append(playerTilemapCoords)
-			components[playerTilemapCoords].resetTo()
-		elif playerTilemapCoords in components:
-			gears.append(playerTilemapCoords)
-			components[playerTilemapCoords].resetTo()
-		else:
-			gears.append(playerTilemapCoords)
-			components[playerTilemapCoords] = Component.new()
-		updateGearRendering()
-		updateGearLogic()
+		placeGear(playerTilemapCoords)
 
 	if event.is_action_pressed("placeTestGen"):##testing version of placing generator
-		if playerTilemapCoords in gears:
-			gears.erase(playerTilemapCoords)
-			generators.append(playerTilemapCoords)
-			components[playerTilemapCoords].resetTo(32, 10, 50, 1)
-		elif playerTilemapCoords in components:
-			generators.append(playerTilemapCoords)
-			components[playerTilemapCoords].resetTo(32, 10, 50, 1)
-		else:
-			generators.append(playerTilemapCoords)
-			components[playerTilemapCoords] = Component.new(32, 10, 50, 1)
+		placeTestGen(playerTilemapCoords)
 		
-		updateGearRendering()
-		updateGearLogic()
+	if event.is_action_pressed("Debug Tile Data"):
+		printTileData(playerTilemapCoords)
 
 func updateGearRendering() -> void:
 	for componentCoords in components:
@@ -123,3 +104,37 @@ func updateGearLogic() -> void:
 	for genPos in generators:
 		findAndUpdateConnectedComponents(genPos, components[genPos].genID)
 	updateGearRendering()
+
+func placeGear(playerTilemapCoords) -> void:
+	if playerTilemapCoords in generators:
+		generators.erase(playerTilemapCoords)
+		gears.append(playerTilemapCoords)
+		components[playerTilemapCoords].resetTo()
+	elif playerTilemapCoords in components:
+		gears.append(playerTilemapCoords)
+		components[playerTilemapCoords].resetTo()
+	else:
+		gears.append(playerTilemapCoords)
+		components[playerTilemapCoords] = Component.new()
+	updateGearRendering()
+	updateGearLogic()
+
+func placeTestGen(playerTilemapCoords) -> void:
+	if playerTilemapCoords in gears:
+		gears.erase(playerTilemapCoords)
+		generators.append(playerTilemapCoords)
+		components[playerTilemapCoords].resetTo(32, 10, 50, 1)
+	elif playerTilemapCoords in components:
+		generators.append(playerTilemapCoords)
+		components[playerTilemapCoords].resetTo(32, 10, 50, 1)
+	else:
+		generators.append(playerTilemapCoords)
+		components[playerTilemapCoords] = Component.new(32, 10, 50, 1)
+	
+	updateGearRendering()
+	updateGearLogic()
+
+func printTileData(playerPos) -> void:
+	if components.has(playerPos):
+		print("Component: " + str(components[playerPos].genID))
+		print("Speed: " + str(components[playerPos].speed) + " Visual Speed: " + str(components[playerPos].visualSpeed) + " Torque: " + str(components[playerPos].torque))
