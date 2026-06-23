@@ -16,12 +16,14 @@ const THROW_RANGE = 128
 
 var animating_tile_pos = {}
 
+# Gets the mouse pos in constraint to throw range
 func get_local_constr_mouse_pos() -> Vector2:
 	var mp = get_local_mouse_position()
 	if mp.length() > THROW_RANGE:
 		mp = mp.normalized() * THROW_RANGE
 	return mp
 
+# Get the texture of the current cell position
 func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var sid := tm.get_cell_source_id(tm_pos)
 	var src : TileSetAtlasSource = tm.tile_set.get_source(sid) as TileSetAtlasSource
@@ -31,6 +33,7 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var t_img := img.get_region(rect)
 	return ImageTexture.create_from_image(t_img)
 
+# Attempt to carry the tile at pos
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if current_tm.get_cell_source_id(pos) != -1:
 		carrying = true
@@ -40,6 +43,7 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 		$Aim.texture = img
 		tm.set_cell(pos, -1)
 
+# Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if tm.get_cell_source_id(pos) == -1 and not pos in animating_tile_pos:
 		carrying = false
@@ -50,6 +54,8 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		throw_obj.position = position
 		$Holding.texture = null
 		$Aim.texture = null
+		
+		# Throw animation
 		var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		tween.tween_property(throw_obj, "position", current_tm.map_to_local(pos), 0.6)
 		var tween2 = get_tree().create_tween().set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
@@ -92,7 +98,7 @@ func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()
 
 func _physics_process(delta: float) -> void:
-	
+	# Allow for buffer input of throwing
 	if Input.is_action_pressed("interact") and not carrying:
 		var tm_pos = ground_tm.local_to_map(position)
 		carry_at_pos(current_tm, tm_pos)
