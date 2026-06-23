@@ -34,9 +34,6 @@ class Component: ##use visual speed when rendering components
 		self.visualSpeed = self.speed
 		if genID == 0 and updateFirstCheck:
 			firstCheck = true
-
-@warning_ignore("unused_parameter")
-func _process(delta: float) -> void:
 	pass
 
 func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void: #TODO: add gear ratios/different gear sizes
@@ -58,7 +55,7 @@ func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void:
 			updateComponent(componentStack[index] + Vector2i.UP, genInfo[genID], startPoint)
 		
 		index += 1
-	
+
 func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, currentGenPos: Vector2i) -> void:
 	var component: Component = components[componentPos]
 	var genSpeed: int = currentGenInfo["speed"]
@@ -134,7 +131,7 @@ func placeTestGen(playerTilemapCoords) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
-func printTileData(playerPos) -> void:
+func printTileData(playerPos) -> void: ##press B to print tile data
 	if components.has(playerPos):
 		print("Component: " + str(components[playerPos].genID))
 		print("Speed: " + str(components[playerPos].speed) + " Visual Speed: " + str(components[playerPos].visualSpeed) + " Torque: " + str(components[playerPos].torque))
