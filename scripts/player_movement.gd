@@ -28,6 +28,12 @@ func get_local_constr_mouse_pos() -> Vector2:
 		mp = mp.normalized() * THROW_RANGE
 	return mp
 
+func search_scene_at_tile_pos(tm: TileMapLayer, pos: Vector2i) -> Node2D:
+	for node : Node2D in tm.get_children():
+		if node.position == tm.map_to_local(pos):
+			return node
+	return null
+
 # Get the texture of the current cell position
 func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var sid := tm.get_cell_source_id(tm_pos)
@@ -47,6 +53,7 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var t_img := img.get_region(rect)
 	return ImageTexture.create_from_image(t_img)
 
+
 # Attempt to carry the tile at pos
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if current_tm.get_cell_source_id(pos) != -1:
@@ -65,7 +72,14 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var img = cell_pos_to_texture(tm, pos)
 			$Holding.texture = img
 			$Aim.texture = img
-		tm.set_cell(pos, -1)
+		var source = tm.tile_set.get_source(carrying_data.sid)
+		if source is TileSetScenesCollectionSource:
+			var node = search_scene_at_tile_pos(tm, pos)
+			if node.get_script() == Building:
+				carrying_data.health = node.health
+			tm.set_cell(pos, -1)
+		else:
+			tm.set_cell(pos, -1)
 
 # Assumes that all terrain will only have collidable objects
 func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
@@ -110,6 +124,7 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		await tween.finished
 		throw_obj.queue_free()
 		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
+			
 		var source = tm.tile_set.get_source(saved_carrying_data.sid)
 		if source is TileSetScenesCollectionSource:
 			var scene = source.get_scene_tile_scene(saved_carrying_data.altid).instantiate()
@@ -118,7 +133,12 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 				scene.queue_free()
 					
 		animating_tile_pos.erase(pos)
-
+		
+		# For some reason godot has a small delay when placing scene tiles...
+		if "health" in saved_carrying_data:
+			await get_tree().create_timer(0.0025).timeout
+			search_scene_at_tile_pos(tm, pos).health = saved_carrying_data.health
+			
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if not carrying:
