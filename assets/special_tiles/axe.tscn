@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cp68stjrkgjy"]
+
+[ext_resource type="Script" uid="uid://dbkobqs5kkgl" path="res://scripts/tiles/classes/tool.gd" id="1_w2jp4"]
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="2_0mc77"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+atlas = ExtResource("2_0mc77")
+region = Rect2(128, 96, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tn5n"]
+size = Vector2(32, 32)
+
+[node name="Axe" type="StaticBody2D" unique_id=799735011]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_w2jp4")
+tool_type = "Axe"
+atlas_texture = Vector2i(4, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742097956]
+texture = SubResource("AtlasTexture_6sj1v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1243386754]
+shape = SubResource("RectangleShape2D_8tn5n")

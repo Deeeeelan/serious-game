@@ -1,9 +1,8 @@
-extends Node2D
+extends SpecialTile
 class_name Building
 
 signal health_changed(new)
 
-@export var atlas_texture: Vector2i
 
 @export var health : int = 100:
 	set(value):

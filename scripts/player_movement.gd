@@ -17,6 +17,8 @@ const SPEED = 320.0
 const LERP_SPEED = 0.08
 const THROW_RANGE = 128
 
+const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
+
 var animating_tile_pos = {}
 
 # Gets the mouse pos in constraint to throw range
@@ -34,9 +36,10 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 	var src : TileSetAtlasSource = tm.tile_set.get_source(0)
 
 	if source is TileSetScenesCollectionSource:
-		atl_coord = source.get_scene_tile_scene(1).instantiate().atlas_texture
-		print(atl_coord)
-
+		var altid = tm.get_cell_alternative_tile(tm_pos)
+		var scene = source.get_scene_tile_scene(altid).instantiate()
+		atl_coord = scene.atlas_texture
+		scene.queue_free()
 	else:
 		atl_coord = tm.get_cell_atlas_coords(tm_pos)
 	var rect := src.get_tile_texture_region(atl_coord)
@@ -62,6 +65,14 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
 	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 
 		
+func use_tool(tool: String, pos: Vector2i):
+	for dir in CARDINAL_2i_DIRS:
+		var new_pos = pos + dir
+		if tool == "Axe":
+			var altcoords = terrain_tm.get_cell_atlas_coords(new_pos)
+			if altcoords in GameRecipes.axe_recipes:
+				terrain_tm.set_cell(new_pos, -1)
+				ground_tm.set_cell(new_pos, 0, GameRecipes.axe_recipes[altcoords])
 
 # Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
@@ -86,6 +97,13 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		await tween.finished
 		throw_obj.queue_free()
 		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
+		var source = tm.tile_set.get_source(saved_carrying_data.sid)
+		if source is TileSetScenesCollectionSource:
+			var scene = source.get_scene_tile_scene(saved_carrying_data.altid).instantiate()
+			if scene.get_script() == Tool:
+				use_tool(scene.tool_type, pos)
+				scene.queue_free()
+					
 		animating_tile_pos.erase(pos)
 
 func _input(event: InputEvent) -> void:
