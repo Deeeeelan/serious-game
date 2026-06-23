@@ -4,6 +4,9 @@ extends CharacterBody2D
 @export var ground_tm: TileMapLayer
 @export var underground_tm: TileMapLayer
 
+@onready var terrain_tm: TileMapLayer = %Terrain
+
+
 @export var debris: Node2D
 
 @export var carrying := false
@@ -55,9 +58,14 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 		$Aim.texture = img
 		tm.set_cell(pos, -1)
 
+# Assumes that all terrain will only have collidable objects
+func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
+	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 
+		
+
 # Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
-	if tm.get_cell_source_id(pos) == -1 and not pos in animating_tile_pos:
+	if valid_player_drop_pos(tm, pos) and not pos in animating_tile_pos:
 		carrying = false
 		animating_tile_pos[pos] = true
 		var saved_carrying_data = carrying_data
