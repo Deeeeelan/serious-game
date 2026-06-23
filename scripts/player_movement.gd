@@ -10,12 +10,19 @@ extends CharacterBody2D
 @export var debris: Node2D
 
 @export var carrying := false
+
+@onready var camera = %Camera2D
+
 var carrying_data
 
 const TILE_SIZE = 32
 const SPEED = 320.0
 const LERP_SPEED = 0.08
 const THROW_RANGE = 128
+
+@onready var current_zoom = camera.zoom.x
+const MAX_ZOOM := 4.0
+const MIN_ZOOM := 1.0
 
 const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
 
@@ -163,9 +170,17 @@ func _input(event: InputEvent) -> void:
 			tween.tween_property(ground_tm, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
 			tween.tween_property(underground_tm, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.2)
 			tween.play()
-
+	elif event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			if current_zoom < MAX_ZOOM:
+				current_zoom += 0.1
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			if current_zoom > MIN_ZOOM:
+				current_zoom -= 0.1
+			
 func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()
+	camera.zoom = lerp(camera.zoom, Vector2.ONE * current_zoom, 0.1)
 
 func _physics_process(delta: float) -> void:
 	# Allow for buffer input of throwing

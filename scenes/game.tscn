@@ -17,6 +17,7 @@
 [node name="Node2D" type="Node2D" parent="." unique_id=348159224]
 
 [node name="Camera2D" type="Camera2D" parent="Node2D" unique_id=1746627479]
+unique_name_in_owner = true
 position = Vector2(16, -16)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
