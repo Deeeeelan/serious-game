@@ -8,6 +8,8 @@
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
 [ext_resource type="Script" uid="uid://chkqlilwftv4o" path="res://scripts/building_manager.gd" id="5_iywne"]
 [ext_resource type="Script" uid="uid://dvhojv8fc0vmn" path="res://scripts/hud.gd" id="6_gee14"]
+[ext_resource type="Script" uid="uid://cqsoe5748vm10" path="res://scenes/crafting.gd" id="7_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://u688pdgbdp43" path="res://assets/images/gui/nineslice.png" id="7_vtaks"]
 [ext_resource type="Script" uid="uid://dphhbtyxnfoff" path="res://scripts/day_cycle_manager.gd" id="9_0tnpc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
@@ -65,6 +67,7 @@ avoidance_enabled = true
 radius = 16.0
 
 [node name="Player" parent="Node2D" unique_id=296816734 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm", "debris") instance=ExtResource("2_lnu2h")]
+unique_name_in_owner = true
 position = Vector2(16, -16)
 current_tm = NodePath("../Terrain/Ground")
 ground_tm = NodePath("../Terrain/Ground")
@@ -116,11 +119,45 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Crafting"
 
+[node name="Crafting" type="Control" parent="CanvasLayer/Control" unique_id=163053917]
+visible = false
+layout_mode = 1
+anchor_right = 0.4
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_kvpfn")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Control/Crafting" unique_id=2023839603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vtaks")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Crafting" unique_id=1488418985]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="GearManager" type="Node" parent="." unique_id=1866319422]
 script = ExtResource("1_xwrxv")
 
 [node name="BuildingManager" type="Node" parent="." unique_id=887309424]
 script = ExtResource("5_iywne")
 
-[node name="Node" type="Node" parent="." unique_id=1654732351]
+[node name="DayCycleManager" type="Node" parent="." unique_id=1654732351]
 script = ExtResource("9_0tnpc")

@@ -9,9 +9,15 @@ var pickaxe_recipes: Dictionary = {
 }
 
 var building_recipes: Dictionary = {
-	"WoodWall": {
-		"Name": "Wood Wall",
-		"Desc": "desc",
+	"wood_wall": {
+		"name": "Wood Wall",
+		"atlas_coords": Vector2i(0, 0),
 		"wood": 1,
-	}
+	},
+	"stonewall": {
+		"name": "Stone Wall",
+		"atlas_coords": Vector2i(0, 1),
+		"wood": 1,
+		"stone": 1,
+	},
 }

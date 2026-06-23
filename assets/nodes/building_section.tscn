@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b82itt8p1flk7"]
+
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="1_v5tkb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+atlas = ExtResource("1_v5tkb")
+region = Rect2(64, 32, 32, 32)
+
+[node name="BuildingSection" type="VBoxContainer" unique_id=667792659]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1207409562]
+layout_mode = 2
+texture = SubResource("AtlasTexture_6sj1v")
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1810753802]
+layout_mode = 2
+bbcode_enabled = true
+text = "Wood Wall
+[b]Gold:[/b] 0 [b]Wood:[/b] 0 [b]Stone:[/b] 0 [b]Iron:[/b] 0"
+fit_content = true
+
+[node name="Craft" type="Button" parent="." unique_id=1552275978]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Craft"
