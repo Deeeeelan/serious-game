@@ -3,6 +3,9 @@ extends CharacterBody2D
 @export var SPEED = 100.0
 @export var target: Node2D
 
+@export var health = 100
+@export var damage = 10
+
 func _ready() -> void:
 	pass # Replace with function body.
 

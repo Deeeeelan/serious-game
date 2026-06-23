@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://b18owb3f4k60j"]
 
 [ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="1_m6ex6"]
+[ext_resource type="PackedScene" uid="uid://cok3lnntxar2j" path="res://assets/special_tiles/base.tscn" id="2_5seww"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_m6ex6"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -47,6 +48,14 @@ texture_region_size = Vector2i(32, 32)
 1:2/0 = 0
 1:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_u3kwe")
 1:0/0 = 0
+2:0/0 = 0
+2:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:1/0 = 0
+2:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_hxdb4"]
+scenes/1/scene = ExtResource("2_5seww")
 
 [resource]
 tile_size = Vector2i(32, 32)
@@ -55,3 +64,4 @@ physics_layer_1/collision_layer = 2
 physics_layer_1/collision_mask = 2
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_ki5qi")
+sources/1 = SubResource("TileSetScenesCollectionSource_hxdb4")

@@ -30,7 +30,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAQAAAABAAAAAAAAAAQAAAACAAAAAAAAAAQ
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Ground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=149897057 groups=["Obstacles"]]
-tile_map_data = PackedByteArray("AAAAAP3/AAAAAAAAAAD8//v/AAAAAAEAAAAEAPv/AAAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAAEAPv/AAAAAAEAAAD8//v/AAAAAAEAAAAAAPv/AAAAAAAAAAAEAP3/AAACAAEAAAD8//3/AAACAAEAAAAAAP3/AQAAAAAAAQA=")
 tile_set = ExtResource("1_uwrxv")
 
 [node name="Underground" type="TileMapLayer" parent="Node2D/Terrain" unique_id=1655468512]
@@ -58,7 +58,6 @@ texture = ExtResource("3_gee14")
 path_max_distance = 256.0
 avoidance_enabled = true
 radius = 16.0
-debug_enabled = true
 
 [node name="Player" parent="Node2D" unique_id=296816734 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm", "debris") instance=ExtResource("2_lnu2h")]
 position = Vector2(16, -16)
