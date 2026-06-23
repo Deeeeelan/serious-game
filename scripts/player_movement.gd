@@ -66,13 +66,21 @@ func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
 	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 
 		
 func use_tool(tool: String, pos: Vector2i):
+	print(tool)
 	for dir in CARDINAL_2i_DIRS:
 		var new_pos = pos + dir
+		var altcoords = terrain_tm.get_cell_atlas_coords(new_pos)
+		var recipe_dict: Dictionary
 		if tool == "Axe":
-			var altcoords = terrain_tm.get_cell_atlas_coords(new_pos)
-			if altcoords in GameRecipes.axe_recipes:
-				terrain_tm.set_cell(new_pos, -1)
-				ground_tm.set_cell(new_pos, 0, GameRecipes.axe_recipes[altcoords])
+			recipe_dict = GameRecipes.axe_recipes
+		elif tool == "Pickaxe":
+			recipe_dict = GameRecipes.pickaxe_recipes
+		else:
+			push_error("Unknown tool/recipe:", tool)
+		if altcoords in recipe_dict:
+			terrain_tm.set_cell(new_pos, -1)
+			ground_tm.set_cell(new_pos, 0, recipe_dict[altcoords])
+			
 
 # Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):

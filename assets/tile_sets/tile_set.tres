@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="1_m6ex6"]
 [ext_resource type="PackedScene" uid="uid://cok3lnntxar2j" path="res://assets/special_tiles/base.tscn" id="2_5seww"]
 [ext_resource type="PackedScene" uid="uid://cp68stjrkgjy" path="res://assets/special_tiles/axe.tscn" id="3_hxdb4"]
+[ext_resource type="PackedScene" uid="uid://bp45aeselprvr" path="res://assets/special_tiles/pickaxe.tscn" id="4_u3kwe"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_m6ex6"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -63,6 +64,7 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_hxdb4"]
 scenes/1/scene = ExtResource("2_5seww")
 scenes/2/scene = ExtResource("3_hxdb4")
+scenes/3/scene = ExtResource("4_u3kwe")
 
 [resource]
 tile_size = Vector2i(32, 32)
