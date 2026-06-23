@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var components: Dictionary[Vector2i,Component] = {}
 var generators: Array[Vector2i] = []
