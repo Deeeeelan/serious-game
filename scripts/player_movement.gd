@@ -72,14 +72,13 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var img = cell_pos_to_texture(tm, pos)
 			$Holding.texture = img
 			$Aim.texture = img
-		var source = tm.tile_set.get_source(carrying_data.sid)
-		if source is TileSetScenesCollectionSource:
-			var node = search_scene_at_tile_pos(tm, pos)
-			if node.get_script() == Building:
-				carrying_data.health = node.health
-			tm.set_cell(pos, -1)
-		else:
-			tm.set_cell(pos, -1)
+			
+			var source = tm.tile_set.get_source(carrying_data.sid)
+			if source is TileSetScenesCollectionSource:
+				var node = search_scene_at_tile_pos(tm, pos)
+				if node.get_script() == Building:
+					carrying_data.health = node.health
+		tm.set_cell(pos, -1)
 
 # Assumes that all terrain will only have collidable objects
 func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:

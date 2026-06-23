@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://chqy7u7nlutr1"]
 
 [ext_resource type="TileSet" uid="uid://b18owb3f4k60j" path="res://assets/tile_sets/tile_set.tres" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear_manager.gd" id="1_xwrxv"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
 [ext_resource type="Script" uid="uid://dqsgbb0ardokf" path="res://scripts/enemy_script_simple.gd" id="2_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="3_gee14"]
