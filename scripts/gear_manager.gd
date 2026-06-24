@@ -6,7 +6,7 @@ var gears: Array[Vector2i] = []
 var genInfo: Dictionary = {3:{"speed":10, "torque":50}, 4:{"speed":20, "torque":100}}
 
 @onready var player: CharacterBody2D = $"../Node2D/Player"
-@onready var underground: TileMapLayer = $"../Node2D/Terrain/Underground"
+@onready var componentMap: TileMapLayer = $"../Node2D/Terrain/GearAndGenMap"
 
 class Component: ##use visual speed when rendering components
 	var size: int
@@ -72,7 +72,7 @@ func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, current
 			component.visualSpeed = components[currentGenPos].speed
 
 func _input(event: InputEvent) -> void: ##method for placing test gear/generator
-	var playerTilemapCoords: Vector2i = underground.local_to_map(player.position)
+	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)
 
 	if event.is_action_pressed("placeGear"): ##testing version of placing gear
 		placeGear(playerTilemapCoords)
@@ -87,11 +87,10 @@ func updateGearRendering() -> void:
 	for componentCoords in components:
 		var component: Component = components[componentCoords]
 		
-		
 		if component.genID == 0 and component.speed != 0:
-			underground.set_cell(componentCoords, 0, Vector2i(1, 0))
+			componentMap.set_cell(componentCoords, 0, Vector2i(1, 0))
 		else:
-			underground.set_cell(componentCoords, 0, Vector2i(0, component.genID))
+			componentMap.set_cell(componentCoords, 0, Vector2i(0, component.genID))
 
 func updateGearLogic() -> void:
 	for gearPos in gears:

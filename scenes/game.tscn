@@ -2,6 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://b18owb3f4k60j" path="res://assets/tile_sets/tile_set.tres" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear_manager.gd" id="1_xwrxv"]
+[ext_resource type="Texture2D" uid="uid://b3dvvwqc8oopa" path="res://assets/images/tilemaps/gearmap.png" id="2_dinhu"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bfx5feg0u1bvi" path="res://assets/mobs/enemy_basic.tscn" id="2_vtaks"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
@@ -11,6 +12,45 @@
 [ext_resource type="Texture2D" uid="uid://u688pdgbdp43" path="res://assets/images/gui/nineslice.png" id="7_vtaks"]
 [ext_resource type="Script" uid="uid://r6r8d74k2iwl" path="res://scripts/buildings_stats.gd" id="8_kvpfn"]
 [ext_resource type="Script" uid="uid://dphhbtyxnfoff" path="res://scripts/day_cycle_manager.gd" id="9_0tnpc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kvuet"]
+resource_name = "GearsAndGens"
+texture = ExtResource("2_dinhu")
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/animation_columns = 6
+0:0/animation_speed = 5.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+0:4/size_in_atlas = Vector2i(4, 4)
+0:4/animation_columns = 6
+0:4/animation_speed = 10.0
+0:4/animation_frame_0/duration = 1.0
+0:4/animation_frame_1/duration = 1.0
+0:4/animation_frame_2/duration = 1.0
+0:4/animation_frame_3/duration = 1.0
+0:4/animation_frame_4/duration = 1.0
+0:4/animation_frame_5/duration = 1.0
+0:4/0 = 0
+0:8/size_in_atlas = Vector2i(4, 4)
+0:8/animation_columns = 6
+0:8/animation_speed = 20.0
+0:8/animation_frame_0/duration = 1.0
+0:8/animation_frame_1/duration = 1.0
+0:8/animation_frame_2/duration = 1.0
+0:8/animation_frame_3/duration = 1.0
+0:8/animation_frame_4/duration = 1.0
+0:8/animation_frame_5/duration = 1.0
+0:8/0 = 0
+0:12/size_in_atlas = Vector2i(4, 4)
+0:12/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_b12ix"]
+sources/0 = SubResource("TileSetAtlasSource_kvuet")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sj1v"]
 bg_color = Color(0.05580274, 0.05400385, 0.085979305, 1)
@@ -53,6 +93,10 @@ tile_set = ExtResource("1_uwrxv")
 modulate = Color(1, 1, 1, 0.2)
 tile_map_data = PackedByteArray("AAAAAP3/AAABAAAAAAABAP3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP3/AAABAAAAAAAEAPz/AAABAAAAAAAEAPv/AAABAAAAAAD///3/AAABAAAAAAD+//3/AAABAAAAAAD9//3/AAABAAAAAAD8//3/AAABAAAAAAD8//z/AAABAAAAAAD8//v/AAABAAAAAAD6//z/AAADAAAAAAD5//z/AAAFAAAAAAD5//v/AAADAAAAAAA=")
 tile_set = ExtResource("1_uwrxv")
+
+[node name="GearAndGenMap" type="TileMapLayer" parent="Node2D/Terrain" unique_id=965642568]
+tile_map_data = PackedByteArray("AAAHAPT/AAAAAAAAAAAIAPT/AAAAAAAAAAAJAPT/AAAAAAAAAAAKAPT/AAAAAAAAAAALAPT/AAAAAAAAAAAKAPP/AAAAAAAAAAAJAPP/AAAAAAAAAAAIAPP/AAAAAAAAAAAHAPP/AAAAAAAAAAAGAPP/AAAAAAAAAAAFAPP/AAAAAAAAAAAEAPP/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_b12ix")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
 
