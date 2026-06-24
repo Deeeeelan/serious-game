@@ -106,7 +106,24 @@ func updateGearLogic() -> void:
 		findAndUpdateConnectedComponents(genPos, components[genPos].genID)
 	updateGearRendering()
 
-func placeGear(playerTilemapCoords) -> void:
+func moveComponent(startPos: Vector2i, endPos: Vector2i) -> void:
+	if components.has(endPos):
+		print("something already at endpos")
+	elif components.has(startPos):
+		if components[startPos].genID == 0:
+			gears.erase(startPos)
+			gears.append(endPos)
+			components[endPos] = components[startPos]
+			components.erase(startPos)
+		else:
+			generators.erase(startPos)
+			generators.append(endPos)
+			components[endPos] = components[startPos]
+			components.erase(startPos)
+	else:
+		print("nothing at startpos")
+
+func placeGear(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in generators:
 		generators.erase(playerTilemapCoords)
 		gears.append(playerTilemapCoords)
@@ -120,7 +137,7 @@ func placeGear(playerTilemapCoords) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
-func placeTestGen(playerTilemapCoords) -> void:
+func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
 	elif playerTilemapCoords in components:
@@ -129,7 +146,7 @@ func placeTestGen(playerTilemapCoords) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
-func clearComonent(playerTilemapCoords) -> void:
+func clearComonent(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
 	elif playerTilemapCoords in components:
@@ -141,7 +158,7 @@ func clearComonent(playerTilemapCoords) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
-func printTileData(playerPos) -> void: ##press B to print tile data
+func printTileData(playerPos: Vector2i) -> void: ##press B to print tile data
 	if components.has(playerPos):
 		print("Component: " + str(components[playerPos].genID))
 		print("Speed: " + str(components[playerPos].speed) + " Visual Speed: " + str(components[playerPos].visualSpeed) + " Torque: " + str(components[playerPos].torque))
