@@ -12,6 +12,7 @@ extends CharacterBody2D
 @export var carrying := false
 
 @onready var camera = %Camera2D
+@onready var gearManager = %GearManager
 
 var carrying_data
 
@@ -83,7 +84,7 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var img = cell_pos_to_texture(tm, pos)
 			$Holding.texture = img
 			$Aim.texture = img
-			
+			gearManager.clearComonent(pos)
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
 				var node = search_scene_at_tile_pos(tm, pos)
@@ -111,6 +112,7 @@ func use_tool(tool: String, pos: Vector2i):
 			terrain_tm.set_cell(new_pos, -1)
 			ground_tm.set_cell(new_pos, 0, recipe_dict[altcoords])
 			
+
 
 # Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
