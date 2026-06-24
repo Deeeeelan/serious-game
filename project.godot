@@ -41,6 +41,11 @@ folder_colors={
 "res://scripts/": "red"
 }
 
+[global_group]
+
+Enemy=""
+Debris=""
+
 [input]
 
 up={

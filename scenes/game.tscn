@@ -112,7 +112,8 @@ ground_tm = NodePath("../Terrain/Ground")
 underground_tm = NodePath("../Terrain/Underground")
 debris = NodePath("../Debris")
 
-[node name="Debris" type="Node2D" parent="Node2D" unique_id=874590904]
+[node name="Debris" type="Node2D" parent="Node2D" unique_id=874590904 groups=["Debris"]]
+unique_name_in_owner = true
 
 [node name="Target" type="Node2D" parent="Node2D" unique_id=1277146496]
 unique_name_in_owner = true
