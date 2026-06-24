@@ -90,14 +90,14 @@ func updateGearRendering() -> void: # NOTE: gear rendering will not exist, this 
 		var component: Component = components[componentCoords]
 		
 		if component.genID == 0:
-			if component.speed == 0:
+			if component.visualSpeed == 0:
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, 9))
-			elif component.speed < 0:
+			elif component.visualSpeed < 0:
 				@warning_ignore("integer_division")
-				componentMap.set_cell(componentCoords, 0, Vector2i(21, int(3 * log(component.speed / 5) / log(2))))
+				componentMap.set_cell(componentCoords, 0, Vector2i(21, int(3 * log(component.visualSpeed / 5) / log(2))))
 			else:
 				@warning_ignore("integer_division")
-				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.speed / 5) / log(2))))
+				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.visualSpeed / 5) / log(2))))
 
 func updateGearLogic() -> void:
 	for gearPos in gears:
@@ -122,7 +122,10 @@ func moveComponent(startPos: Vector2i, endPos: Vector2i) -> void:
 			components.erase(startPos)
 	else:
 		print("nothing at startpos")
+	updateGearLogic()
+	updateGearRendering()
 
+## @deprecated: Testing purposes only
 func placeGear(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in generators:
 		generators.erase(playerTilemapCoords)
@@ -137,6 +140,7 @@ func placeGear(playerTilemapCoords: Vector2i) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
+## @deprecated: Testing purposes only
 func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
