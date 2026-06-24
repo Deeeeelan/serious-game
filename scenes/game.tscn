@@ -3,16 +3,25 @@
 [ext_resource type="TileSet" uid="uid://b18owb3f4k60j" path="res://assets/tile_sets/tile_set.tres" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear_manager.gd" id="1_xwrxv"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
-[ext_resource type="Script" uid="uid://dqsgbb0ardokf" path="res://scripts/enemy_script_simple.gd" id="2_u5sy4"]
-[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="3_gee14"]
+[ext_resource type="PackedScene" uid="uid://bfx5feg0u1bvi" path="res://assets/mobs/enemy_basic.tscn" id="2_vtaks"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
 [ext_resource type="Script" uid="uid://chkqlilwftv4o" path="res://scripts/building_manager.gd" id="5_iywne"]
 [ext_resource type="Script" uid="uid://dvhojv8fc0vmn" path="res://scripts/hud.gd" id="6_gee14"]
-[ext_resource type="Script" uid="uid://cqsoe5748vm10" path="res://scenes/crafting.gd" id="7_kvpfn"]
+[ext_resource type="Script" uid="uid://cqsoe5748vm10" path="res://scripts/crafting.gd" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://u688pdgbdp43" path="res://assets/images/gui/nineslice.png" id="7_vtaks"]
+[ext_resource type="Script" uid="uid://r6r8d74k2iwl" path="res://scripts/buildings_stats.gd" id="8_kvpfn"]
 [ext_resource type="Script" uid="uid://dphhbtyxnfoff" path="res://scripts/day_cycle_manager.gd" id="9_0tnpc"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sj1v"]
+bg_color = Color(0.05580274, 0.05400385, 0.085979305, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8tn5n"]
+bg_color = Color(0.9998053, 0.08568286, 0.1493079, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.05490196, 0.05490196, 0.08627451, 1)
 
 [node name="Game" type="Node" unique_id=384866855]
 
@@ -47,24 +56,9 @@ tile_set = ExtResource("1_uwrxv")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
 
-[node name="Enemy" type="CharacterBody2D" parent="Node2D/Mobs" unique_id=1758160856 node_paths=PackedStringArray("target")]
-position = Vector2(278, -213)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("2_u5sy4")
+[node name="EnemyBasic" parent="Node2D/Mobs" unique_id=1702881752 node_paths=PackedStringArray("target") instance=ExtResource("2_vtaks")]
+position = Vector2(318, -211)
 target = NodePath("../../Target")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Mobs/Enemy" unique_id=1406786638]
-shape = SubResource("CircleShape2D_8tn5n")
-
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/Mobs/Enemy" unique_id=1501482814]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_gee14")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Node2D/Mobs/Enemy" unique_id=1809426932]
-path_max_distance = 256.0
-avoidance_enabled = true
-radius = 16.0
 
 [node name="Player" parent="Node2D" unique_id=296816734 node_paths=PackedStringArray("current_tm", "ground_tm", "underground_tm", "debris") instance=ExtResource("2_lnu2h")]
 unique_name_in_owner = true
@@ -152,6 +146,22 @@ offset_right = -15.0
 offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BuildingStats" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1326458945]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 18.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/background = SubResource("StyleBoxFlat_6sj1v")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8tn5n")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+script = ExtResource("8_kvpfn")
+
+[node name="SearchTick" type="Timer" parent="CanvasLayer/Control/BuildingStats" unique_id=943036690]
+wait_time = 0.1
+autostart = true
 
 [node name="GearManager" type="Node" parent="." unique_id=1866319422]
 script = ExtResource("1_xwrxv")

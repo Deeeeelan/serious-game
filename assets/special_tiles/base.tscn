@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cok3lnntxar2j"]
 
 [ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="1_tkinf"]
-[ext_resource type="Script" uid="uid://6gtukjsaidgw" path="res://scripts/tiles/classes/building.gd" id="1_x2ohm"]
+[ext_resource type="Script" uid="uid://4mimjouvbefo" path="res://scripts/tiles/base.gd" id="1_x2ohm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
 atlas = ExtResource("1_tkinf")
@@ -14,6 +14,7 @@ size = Vector2(32, 32)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_x2ohm")
+max_health = 1000
 health = 1000
 atlas_texture = Vector2i(2, 0)
 

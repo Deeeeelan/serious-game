@@ -83,7 +83,8 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
 				var node = search_scene_at_tile_pos(tm, pos)
-				if node.get_script() == Building:
+				if node.get_script() and node.get_script().get_base_script() == Building:
+					print(node.health)
 					carrying_data.health = node.health
 		tm.set_cell(pos, -1)
 

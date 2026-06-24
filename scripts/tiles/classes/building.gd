@@ -3,8 +3,9 @@ class_name Building
 
 signal health_changed(new)
 
+@export var max_health : int
 
-@export var health : int = 100:
+@export var health : int:
 	set(value):
 		health = value
 		health_changed.emit(health)

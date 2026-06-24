@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bfx5feg0u1bvi"]
+
+[ext_resource type="Script" uid="uid://dqsgbb0ardokf" path="res://scripts/enemies/enemy_base.gd" id="1_baiir"]
+[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="2_f21e8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kvpfn"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
+radius = 16.0
+
+[node name="EnemyBasic" type="CharacterBody2D" unique_id=1702881752 node_paths=PackedStringArray("target")]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_baiir")
+target = NodePath("")
+
+[node name="DamageTick" type="Timer" parent="." unique_id=941982756]
+autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=365146127]
+shape = SubResource("CircleShape2D_kvpfn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858054830]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_f21e8")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=252335325]
+path_max_distance = 256.0
+avoidance_enabled = true
+radius = 16.0
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2055972681]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1395076235]
+shape = SubResource("CircleShape2D_8tn5n")
