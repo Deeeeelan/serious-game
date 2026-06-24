@@ -3,7 +3,7 @@ extends Node
 var components: Dictionary[Vector2i,Component] = {}
 var generators: Array[Vector2i] = []
 var gears: Array[Vector2i] = []
-var genInfo: Dictionary = {3:{"speed":10, "torque":50}, 4:{"speed":20, "torque":100}}
+var genInfo: Dictionary = {1:{"speed":5, "torque":50}, 2:{"speed":10, "torque":200}, 3:{"speed":20, "torque":500}}
 
 @onready var player: CharacterBody2D = $"../Node2D/Player"
 @onready var componentMap: TileMapLayer = $"../Node2D/Terrain/GearAndGenMap"
@@ -72,7 +72,8 @@ func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, current
 			component.visualSpeed = components[currentGenPos].speed
 
 func _input(event: InputEvent) -> void: ##method for placing test gear/generator
-	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)
+	@warning_ignore("integer_division")
+	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)/2
 
 	if event.is_action_pressed("placeGear"): ##testing version of placing gear
 		placeGear(playerTilemapCoords)
@@ -87,10 +88,15 @@ func updateGearRendering() -> void:
 	for componentCoords in components:
 		var component: Component = components[componentCoords]
 		
-		if component.genID == 0 and component.speed != 0:
-			componentMap.set_cell(componentCoords, 0, Vector2i(1, 0))
-		else:
-			componentMap.set_cell(componentCoords, 0, Vector2i(0, component.genID))
+		if component.genID == 0:
+			if component.speed == 0:
+				componentMap.set_cell(componentCoords, 0, Vector2i(0, 9))
+			elif component.speed < 0:
+				@warning_ignore("integer_division")
+				componentMap.set_cell(componentCoords, 0, Vector2i(21, int(3 * log(component.speed / 5) / log(2))))
+			else:
+				@warning_ignore("integer_division")
+				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.speed / 5) / log(2))))
 
 func updateGearLogic() -> void:
 	for gearPos in gears:
@@ -104,7 +110,7 @@ func placeGear(playerTilemapCoords) -> void:
 		generators.erase(playerTilemapCoords)
 		gears.append(playerTilemapCoords)
 		components[playerTilemapCoords].resetTo()
-	elif playerTilemapCoords in components:
+	elif playerTilemapCoords in components and playerTilemapCoords not in gears:
 		gears.append(playerTilemapCoords)
 		components[playerTilemapCoords].resetTo()
 	else:
