@@ -28,6 +28,8 @@ const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vecto
 
 var animating_tile_pos = {}
 
+@onready var mobdebug = preload("res://assets/mobs/enemy_basic.tscn")
+
 # Gets the mouse pos in constraint to throw range
 func get_local_constr_mouse_pos() -> Vector2:
 	var mp = get_local_mouse_position()
@@ -182,6 +184,11 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			if current_zoom > MIN_ZOOM:
 				current_zoom -= 0.1
+	elif event.is_action_pressed("spawnMobDebug"):
+		var mob = mobdebug.instantiate()
+		mob.position = position + Vector2(0, -32)
+		%Mobs.add_child(mob)
+		
 			
 func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()

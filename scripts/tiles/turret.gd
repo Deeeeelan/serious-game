@@ -12,13 +12,16 @@ func fire():
 	var bul = bullet.instantiate()
 	get_tree().get_first_node_in_group("Debris").add_child(bul)
 	bul.position = position
-	bul.body_entered.connect(func(body: Node2D):
-		if body.is_in_group("Enemy"):
-			body.health -= dmg
-		bul.queue_free()
-	)
+
 	var tween = get_tree().create_tween()
-	tween.tween_property(bul, "position", position + Vector2.RIGHT.rotated($Top.rotation + deg_to_rad(-90)) * 2000, 2.4)
+	tween.tween_property(bul, "position", position + Vector2.RIGHT.rotated($Top.rotation + deg_to_rad(-90)) * 2000, 3.2)
+	bul.body_entered.connect(func(body: Node2D):
+		if body.is_in_group("Enemy") and bul:
+			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
+				tween.stop()
+			body.health -= dmg
+			bul.queue_free()
+	)
 	tween.play()
 	tween.finished.connect(func():
 		if bul:
@@ -50,3 +53,4 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	$Top.rotation = lerp_angle($Top.rotation, target_angle, 0.1)
+	print(health)

@@ -42,6 +42,6 @@ func _ready() -> void:
 		$VBoxContainer.add_child(new_gui)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action("escape"):
+	if event.is_action_pressed("escape"):
 		if visible:
 			visible = false

@@ -28,10 +28,13 @@ func _ready() -> void:
 			GameStats.current_mobs_defeated += 1
 			queue_free()
 		)
+	if not target:
+		target = get_tree().get_first_node_in_group("Target")
 
 
 	
 
 func _physics_process(delta: float) -> void:
-	velocity = position.direction_to(target.position) * SPEED
+	if target:
+		velocity = position.direction_to(target.position) * SPEED
 	move_and_slide()

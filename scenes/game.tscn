@@ -129,6 +129,7 @@ scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_b12ix")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
+unique_name_in_owner = true
 
 [node name="EnemyBasic" parent="Node2D/Mobs" unique_id=1702881752 node_paths=PackedStringArray("target") instance=ExtResource("2_vtaks")]
 position = Vector2(318, -211)
@@ -145,7 +146,7 @@ debris = NodePath("../Debris")
 [node name="Debris" type="Node2D" parent="Node2D" unique_id=874590904 groups=["Debris"]]
 unique_name_in_owner = true
 
-[node name="Target" type="Node2D" parent="Node2D" unique_id=1277146496]
+[node name="Target" type="Node2D" parent="Node2D" unique_id=1277146496 groups=["Target"]]
 unique_name_in_owner = true
 position = Vector2(16, -80)
 

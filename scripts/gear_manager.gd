@@ -84,7 +84,8 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 	if event.is_action_pressed("Debug Tile Data"):
 		printTileData(playerTilemapCoords)
 
-func updateGearRendering() -> void:
+func updateGearRendering() -> void: # NOTE: gear rendering will not exist, this script will store logic and positions
+									# When animating, there will be a real invisible gear layer and a fake animating gear layer?
 	for componentCoords in components:
 		var component: Component = components[componentCoords]
 		
@@ -122,11 +123,17 @@ func placeGear(playerTilemapCoords) -> void:
 func placeTestGen(playerTilemapCoords) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
-		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords].resetTo(32, 10, 50, 3)
+	elif playerTilemapCoords in components:
+		generators.erase(playerTilemapCoords)
+	
+	updateGearRendering()
+	updateGearLogic()
+
+func clearComonent(playerTilemapCoords) -> void:
+	if playerTilemapCoords in gears:
+		gears.erase(playerTilemapCoords)
 	elif playerTilemapCoords in components:
 		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords].resetTo(32, 10, 50, 3)
 	else:
 		generators.append(playerTilemapCoords)
 		components[playerTilemapCoords] = Component.new(32, 10, 50, 3)
