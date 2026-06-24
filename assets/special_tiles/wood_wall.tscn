@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://7dv4xb5ro31i"]
+
+[ext_resource type="Script" uid="uid://6gtukjsaidgw" path="res://scripts/tiles/classes/building.gd" id="1_l8x7y"]
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="2_o2bn5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+atlas = ExtResource("2_o2bn5")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tn5n"]
+size = Vector2(32, 32)
+
+[node name="WoodWall" type="StaticBody2D" unique_id=799735011]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_l8x7y")
+max_health = 40
+health = 40
+atlas_texture = Vector2i(5, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742097956]
+texture = SubResource("AtlasTexture_6sj1v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1243386754]
+shape = SubResource("RectangleShape2D_8tn5n")

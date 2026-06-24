@@ -31,7 +31,7 @@ func _ready() -> void:
 					if mat in recipe:
 						GameStats[mat] -= recipe[mat]
 				if "altid" in recipe:
-					ground.set_cell(player_pos, 0, recipe.atlas_coords, recipe.altid)
+					ground.set_cell(player_pos, recipe.id, Vector2i(0, 0), recipe.altid)
 				else:
 					ground.set_cell(player_pos, 0, recipe.atlas_coords)
 				print("crafted", recipe.name)

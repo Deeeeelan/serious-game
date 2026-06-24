@@ -8,16 +8,21 @@ var pickaxe_recipes: Dictionary = {
 	Vector2i(2, 2): Vector2i(1, 3),
 }
 
+# altid must also have id
 var building_recipes: Dictionary = {
 	"wood_wall": {
 		"name": "Wood Wall",
-		"atlas_coords": Vector2i(0, 0),
+		"atlas_coords": Vector2i(5, 2),
+		"id": 1,
+		"altid": 4, 
 		"wood": 1,
 	},
 	"stonewall": {
 		"name": "Stone Wall",
-		"atlas_coords": Vector2i(0, 1),
+		"atlas_coords": Vector2i(5, 3),
 		"wood": 1,
+		"id": 1,
+		"altid": 5, 
 		"stone": 1,
 	},
 }

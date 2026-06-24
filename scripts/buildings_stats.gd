@@ -6,7 +6,7 @@ extends ProgressBar
 
 func tick():
 	var tile : Node2D = player.search_scene_at_tile_pos(ground, ground.local_to_map(player.position))
-	if tile and tile.get_script() and tile.get_script().get_base_script() == Building:
+	if tile and tile.get_script() and (tile.get_script() == Building or tile.get_script().get_base_script() == Building):
 		visible = true
 		value = float(tile.health) / float(tile.max_health)
 	else:
