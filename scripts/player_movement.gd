@@ -69,6 +69,8 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			GameStats.stone += 1
 		elif altcoords == Vector2i(1, 4):
 			GameStats.wood += 1
+		elif altcoords == Vector2i(1,6):
+			GameStats.iron += 1
 		else:
 			carrying = true
 			carrying_data = {
@@ -83,7 +85,7 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
 				var node = search_scene_at_tile_pos(tm, pos)
-				if node.get_script() and (node.get_script() == Building or node.get_script().get_base_script() == Building):
+				if node and node.get_script() and (node.get_script() == Building or node.get_script().get_base_script() == Building):
 					print(node.health)
 					carrying_data.health = node.health
 		tm.set_cell(pos, -1)
@@ -144,7 +146,9 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		# For some reason godot has a small delay when placing scene tiles...
 		if "health" in saved_carrying_data:
 			await get_tree().create_timer(0.0025).timeout
-			search_scene_at_tile_pos(tm, pos).health = saved_carrying_data.health
+			var sc = search_scene_at_tile_pos(tm, pos)
+			if sc:
+				sc.health = saved_carrying_data.health
 			
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):

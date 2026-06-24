@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://7dv4xb5ro31i" path="res://assets/special_tiles/wood_wall.tscn" id="5_pc11y"]
 [ext_resource type="PackedScene" uid="uid://bjvcxkkbx2gtu" path="res://assets/special_tiles/stone_wall.tscn" id="6_fq5vj"]
 [ext_resource type="PackedScene" uid="uid://cthx7u3eckawq" path="res://assets/special_tiles/iron_wall.tscn" id="7_mhblv"]
+[ext_resource type="PackedScene" uid="uid://bdlcw5csomjip" path="res://assets/special_tiles/turret.tscn" id="8_fq5vj"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_m6ex6"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -94,6 +95,7 @@ scenes/3/scene = ExtResource("4_u3kwe")
 scenes/4/scene = ExtResource("5_pc11y")
 scenes/5/scene = ExtResource("6_fq5vj")
 scenes/6/scene = ExtResource("7_mhblv")
+scenes/7/scene = ExtResource("8_fq5vj")
 
 [resource]
 tile_size = Vector2i(32, 32)

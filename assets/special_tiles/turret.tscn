@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bdlcw5csomjip"]
+
+[ext_resource type="Script" uid="uid://fsvaqbogtwf8" path="res://scripts/tiles/turret.gd" id="1_aema3"]
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="2_1ywft"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aema3"]
+atlas = ExtResource("2_1ywft")
+region = Rect2(224, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+atlas = ExtResource("2_1ywft")
+region = Rect2(256, 64, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tn5n"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6sj1v"]
+radius = 256.0
+
+[node name="Turret" type="StaticBody2D" unique_id=799735011]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_aema3")
+max_health = 100
+health = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742097956]
+texture = SubResource("AtlasTexture_aema3")
+
+[node name="Top" type="Sprite2D" parent="." unique_id=1686731155]
+texture = SubResource("AtlasTexture_6sj1v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1243386754]
+shape = SubResource("RectangleShape2D_8tn5n")
+
+[node name="Range" type="Area2D" parent="." unique_id=1438557804]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range" unique_id=1101257921]
+shape = SubResource("CircleShape2D_6sj1v")
+
+[node name="Tick" type="Timer" parent="." unique_id=321462215]
+autostart = true

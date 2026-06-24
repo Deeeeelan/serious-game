@@ -17,12 +17,19 @@ var building_recipes: Dictionary = {
 		"altid": 4, 
 		"wood": 1,
 	},
-	"stonewall": {
+	"stone_wall": {
 		"name": "Stone Wall",
 		"atlas_coords": Vector2i(5, 3),
-		"wood": 1,
 		"id": 1,
 		"altid": 5, 
-		"stone": 1,
+		"stone": 2,
+	},
+	"iron_wall": {
+		"name": "Iron Wall",
+		"atlas_coords": Vector2i(5, 4),
+		"id": 1,
+		"altid": 6, 
+		"iron": 2,
+		"stone": 3,
 	},
 }
