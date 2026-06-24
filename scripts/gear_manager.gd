@@ -3,9 +3,8 @@ extends Node
 var components: Dictionary[Vector2i,Component] = {}
 var generators: Array[Vector2i] = []
 var gears: Array[Vector2i] = []
-var genInfo: Dictionary = {1:{"speed":10, "torque":50}, 2:{"speed":20, "torque":100}}
+var genInfo: Dictionary = {3:{"speed":10, "torque":50}, 4:{"speed":20, "torque":100}}
 
-##References to other objects
 @onready var player: CharacterBody2D = $"../Node2D/Player"
 @onready var underground: TileMapLayer = $"../Node2D/Terrain/Underground"
 
@@ -34,7 +33,6 @@ class Component: ##use visual speed when rendering components
 		self.visualSpeed = self.speed
 		if genID == 0 and updateFirstCheck:
 			firstCheck = true
-	pass
 
 func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void: #TODO: add gear ratios/different gear sizes
 	var componentStack: Array[Vector2i] = [startPoint]
@@ -120,13 +118,13 @@ func placeTestGen(playerTilemapCoords) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
 		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords].resetTo(32, 10, 50, 1)
+		components[playerTilemapCoords].resetTo(32, 10, 50, 3)
 	elif playerTilemapCoords in components:
 		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords].resetTo(32, 10, 50, 1)
+		components[playerTilemapCoords].resetTo(32, 10, 50, 3)
 	else:
 		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords] = Component.new(32, 10, 50, 1)
+		components[playerTilemapCoords] = Component.new(32, 10, 50, 3)
 	
 	updateGearRendering()
 	updateGearLogic()
