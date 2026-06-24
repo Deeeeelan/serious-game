@@ -148,9 +148,19 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BuildingStats" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1326458945]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 18.0
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -59.0
+offset_right = 50.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/background = SubResource("StyleBoxFlat_6sj1v")
 theme_override_styles/fill = SubResource("StyleBoxFlat_8tn5n")
