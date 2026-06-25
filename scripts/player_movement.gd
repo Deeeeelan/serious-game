@@ -87,7 +87,7 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var img = cell_pos_to_texture(tm, pos)
 			$Holding.texture = img
 			$Aim.texture = img
-			if current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS:
+			if current_tm == %GearAndGenMap and (current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS):
 				print("GEAR")
 				carrying_data.component = true
 				gearManager.clearComonent(pos)
@@ -201,6 +201,11 @@ func _input(event: InputEvent) -> void:
 		var mob = mobdebug.instantiate()
 		mob.position = position + Vector2(0, -32)
 		%Mobs.add_child(mob)
+	elif event.is_action_pressed("timewarpdebug"):
+		if Engine.time_scale == 4:
+			Engine.time_scale = 1
+		else:
+			Engine.time_scale = 4
 		
 			
 func _process(delta: float) -> void:

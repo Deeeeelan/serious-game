@@ -119,15 +119,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_lbhrr")
 
-[node name="Shader" type="ColorRect" parent="CanvasLayer/Control" unique_id=1907267472]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="HUD" type="Control" parent="CanvasLayer/Control" unique_id=255095438]
 layout_mode = 1
 anchor_right = 0.308
@@ -232,6 +223,7 @@ grow_horizontal = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
+text = "Wave 1"
 horizontal_alignment = 1
 
 [node name="GearManager" type="Node" parent="." unique_id=1866319422]
