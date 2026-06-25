@@ -1,3 +1,13 @@
 [gd_resource type="Theme" format=3 uid="uid://bfk8m25hg0afo"]
 
+[ext_resource type="StyleBox" uid="uid://ogukmw8stx8c" path="res://assets/themes/button_style_box_flat_normal.tres" id="1_cytoj"]
+[ext_resource type="FontFile" uid="uid://bvynwp2is4bb6" path="res://assets/fonts/pirkkala.ttf" id="1_sx0q5"]
+[ext_resource type="StyleBox" uid="uid://c1efg5287sdbi" path="res://assets/themes/button_style_box_flat_hover.tres" id="2_b4fcc"]
+[ext_resource type="StyleBox" uid="uid://mc5dr6fbxabw" path="res://assets/themes/button_style_box_flat_press.tres" id="3_2reeo"]
+
 [resource]
+default_font = ExtResource("1_sx0q5")
+Button/styles/disabled = ExtResource("1_cytoj")
+Button/styles/hover = ExtResource("2_b4fcc")
+Button/styles/normal = ExtResource("1_cytoj")
+Button/styles/pressed = ExtResource("3_2reeo")

@@ -133,6 +133,8 @@ grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=1594586299]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "[b]Gold:[/b] 0
 [b]Wood:[/b] 0
@@ -143,6 +145,7 @@ fit_content = true
 [node name="Crafting" type="Button" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=2102880589]
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 32
 text = "Crafting"
 
 [node name="Crafting" type="Control" parent="CanvasLayer/Control" unique_id=163053917]
@@ -216,6 +219,7 @@ grow_horizontal = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/CenterGUI" unique_id=12348427]
 layout_mode = 2
+theme_override_font_sizes/font_size = 42
 text = "Wave 1"
 horizontal_alignment = 1
 
