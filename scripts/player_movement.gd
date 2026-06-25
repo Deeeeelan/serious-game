@@ -75,6 +75,8 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			GameStats.wood += 1
 		elif altcoords == Vector2i(1,6):
 			GameStats.iron += 1
+		elif altcoords == Vector2i(1,7):
+			GameStats.gold += 1
 		else:
 			carrying = true
 			carrying_data = {
