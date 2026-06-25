@@ -107,7 +107,7 @@ func updateGearRendering() -> void:
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.visualSpeed / 5) / log(2))))
 		else:
 			groundMap.set_cell(componentCoords, 0, Vector2i(7, 0))
-			
+
 func updateGearLogic() -> void:
 	for gearPos in gears:
 		if gearPos not in components:
@@ -196,7 +196,6 @@ func clearComponent(playerTilemapCoords: Vector2i) -> void:
 	
 	updateGearLogic()
 	updateGearRendering()
-
 
 func printTileData(playerPos: Vector2i) -> void: ##press B to print tile data
 	print("components: ", components)
