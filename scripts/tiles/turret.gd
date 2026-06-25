@@ -8,7 +8,10 @@ extends Building
 var target_angle: float = 0
 var bullet = preload("res://assets/nodes/bullet.tscn")
 
+var has_target := false
+
 func fire():
+	if not has_target: return
 	var bul = bullet.instantiate()
 	get_tree().get_first_node_in_group("Debris").add_child(bul)
 	bul.position = position
@@ -39,9 +42,11 @@ func tick():
 				closest_dist = (position - col.position).length()
 				closest = col
 	if closest:
+		has_target = true
 		var target_position = closest.position + (closest.velocity / 3)
 		target_angle = position.angle_to_point(target_position) + deg_to_rad(90)
-		
+	else:
+		has_target = false
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -53,4 +58,3 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	$Top.rotation = lerp_angle($Top.rotation, target_angle, 0.1)
-	print(health)
