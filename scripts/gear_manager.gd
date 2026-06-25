@@ -92,7 +92,7 @@ func updateGearRendering() -> void: # NOTE: gear rendering will not exist, this 
 		if component.genID == 0:
 			if component.visualSpeed == 0:
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, 9))
-			elif component.visualSpeed < 0:
+			elif componentCoords.x < 0:
 				@warning_ignore("integer_division")
 				componentMap.set_cell(componentCoords, 0, Vector2i(21, int(3 * log(component.visualSpeed / 5) / log(2))))
 			else:
@@ -124,6 +124,13 @@ func moveComponent(startPos: Vector2i, endPos: Vector2i) -> void:
 		print("nothing at startpos")
 	updateGearLogic()
 	updateGearRendering()
+
+func placeComponent(component: Component, location: Vector2i) -> void:
+	components[location] = component
+	if component.genID == 0:
+		gears.append(location)
+	else:
+		generators.append(location)
 
 ## @deprecated: Testing purposes only
 func placeGear(playerTilemapCoords: Vector2i) -> void:
