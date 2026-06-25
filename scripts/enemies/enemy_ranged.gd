@@ -12,13 +12,47 @@ signal health_changed(new)
 		health_changed.emit(health)
 @export var damage = 10
 
+var has_target = false
+var bullet = preload("res://assets/nodes/bullet.tscn")
+var target_angle: float = 0
+
+func fire():
+	if not has_target: return
+	var bul = bullet.instantiate()
+	get_tree().get_first_node_in_group("Debris").add_child(bul)
+	bul.position = position
+
+	var tween = get_tree().create_tween()
+	tween.tween_property(bul, "position", position + Vector2.RIGHT.rotated($Top.rotation + deg_to_rad(-90)) * 2000, 3.2)
+	bul.body_entered.connect(func(body: Node2D):
+		if body.is_in_group("Buildings") and bul:##TODO: make this damage buildings
+			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
+				tween.stop()
+			body.health -= damage
+			bul.queue_free()
+	)
+	tween.play()
+	tween.finished.connect(func():
+		if bul:
+			bul.queue_free()
+	)
+	
 
 func tick():
-	var bodies = $Area2D.get_overlapping_bodies()
-	for body : Node2D in bodies:
-		var script: Script = body.get_script()
-		if script and (script == Building or script.get_base_script() == Building):
-			body.health -= damage
+	var colls = $Range.get_overlapping_bodies()
+	var closest: CharacterBody2D
+	var closest_dist: int = 999999999
+	for col in colls:
+		if col.is_in_group("Enemy"):
+			if (position - col.position).length() < closest_dist:
+				closest_dist = (position - col.position).length()
+				closest = col
+	if closest:
+		has_target = true
+		var target_position = closest.position + (closest.velocity / 3)
+		target_angle = position.angle_to_point(target_position) + deg_to_rad(90)
+	else:
+		has_target = false
 
 func _ready() -> void:
 	$DamageTick.timeout.connect(tick)
