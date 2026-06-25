@@ -27,7 +27,7 @@ const MIN_ZOOM := 1.0
 
 const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
 const GEAR_COORDS = [Vector2i(0, 0), Vector2i(0, 3), Vector2i(0, 6), Vector2i(0, 9), Vector2i(21, 0), Vector2i(21, 3), Vector2i(21, 6)]
-const GEN_COORDS = []
+const GEN_COORDS = [Vector2i(7, 0)]
 var animating_tile_pos = {}
 
 @onready var mobdebug = preload("res://assets/mobs/enemy_basic.tscn")
@@ -90,7 +90,9 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			if current_tm == %GearAndGenMap and (current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS):
 				print("GEAR")
 				carrying_data.component = true
-				gearManager.clearComonent(pos)
+				gearManager.clearComponent(pos)
+			elif carrying_data.atcoords in GEN_COORDS:
+				gearManager.clearComponent(pos)
 							
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
@@ -102,7 +104,7 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 
 # Assumes that all terrain will only have collidable objects
 func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
-	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 
+	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 and ground_tm.get_cell_atlas_coords(pos) not in GEN_COORDS
 		
 func use_tool(tool: String, pos: Vector2i):
 	for dir in CARDINAL_2i_DIRS:
@@ -146,8 +148,10 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		if "component" in saved_carrying_data:
 			gearManager.placeGear(pos)
 			print(gearManager.components)
-		
-		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
+		elif saved_carrying_data.atcoords in GEN_COORDS:
+			gearManager.placeTestGen(pos)
+		else:
+			tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
 			
 		var source = tm.tile_set.get_source(saved_carrying_data.sid)
 		if source is TileSetScenesCollectionSource:

@@ -58,6 +58,9 @@ func new_night():
 	time = 0
 	current_mobs = 0
 	if day <= 14:
+		if day not in MobWaves.waves:
+			push_warning("Ran out of waves, pausing, day:", str(day))
+			return
 		var day_data = MobWaves.waves[day]
 		max_mobs = day_data.total
 		for mob in day_data.mobs:

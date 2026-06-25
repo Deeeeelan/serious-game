@@ -7,6 +7,7 @@ var genInfo: Dictionary = {1:{"speed":5, "torque":50}, 2:{"speed":10, "torque":2
 
 @onready var player: CharacterBody2D = $"../Node2D/Player"
 @onready var componentMap: TileMapLayer = $"../Node2D/Terrain/GearAndGenMap"
+@onready var groundMap: TileMapLayer = %Ground
 
 class Component: ##use visual speed when rendering components
 	var size: int
@@ -34,11 +35,18 @@ class Component: ##use visual speed when rendering components
 		if genID == 0 and updateFirstCheck:
 			firstCheck = true
 
+# Starts from generator?
 func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void: #TODO: add gear ratios/different gear sizes
 	var componentStack: Array[Vector2i] = [startPoint]
 	var index: int = 0
+	print("SEARCHING", startPoint)
 	
 	while componentStack.size() > index:
+		# Special case for gear directly under gen
+		if components.has(componentStack[index]) and componentStack[index] not in componentStack and componentStack[index] == startPoint:
+			componentStack.insert(index + 1, componentStack[index])
+			updateComponent(componentStack[index], genInfo[genID], startPoint)
+		
 		if components.has(componentStack[index] + Vector2i.RIGHT) and componentStack[index] + Vector2i.RIGHT not in componentStack:
 			componentStack.insert(index + 1, componentStack[index] + Vector2i.RIGHT)
 			updateComponent(componentStack[index] + Vector2i.RIGHT, genInfo[genID], startPoint)
@@ -84,24 +92,30 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 	if event.is_action_pressed("Debug Tile Data"):
 		printTileData(playerTilemapCoords)
 
-func updateGearRendering() -> void: # NOTE: gear rendering will not exist, this script will store logic and positions
-									# When animating, there will be a real invisible gear layer and a fake animating gear layer?
+func updateGearRendering() -> void:
 	for componentCoords in components:
 		var component: Component = components[componentCoords]
 		
 		if component.genID == 0:
 			if component.visualSpeed == 0:
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, 9))
-			elif componentCoords.x < 0:
+			elif (componentCoords.x + componentCoords.y) % 2 == 0:
 				@warning_ignore("integer_division")
 				componentMap.set_cell(componentCoords, 0, Vector2i(21, int(3 * log(component.visualSpeed / 5) / log(2))))
 			else:
 				@warning_ignore("integer_division")
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.visualSpeed / 5) / log(2))))
-
+		else:
+			groundMap.set_cell(componentCoords, 0, Vector2i(7, 0))
+			
 func updateGearLogic() -> void:
 	for gearPos in gears:
+		if gearPos not in components:
+			push_warning("Cannot find gear pos in components", gearPos, ", removing")
+			gears.erase(gearPos) # technical debt
+			continue
 		components[gearPos].firstCheck = true
+		components[gearPos].resetTo()
 	for genPos in generators:
 		findAndUpdateConnectedComponents(genPos, components[genPos].genID)
 	updateGearRendering()
@@ -131,11 +145,13 @@ func placeComponent(component: Component, location: Vector2i) -> void:
 		gears.append(location)
 	else:
 		generators.append(location)
+	
+	updateGearLogic()
+	updateGearRendering()
 
-## @deprecated: Testing purposes only
 func placeGear(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in generators:
-		generators.erase(playerTilemapCoords)
+		#generators.erase(playerTilemapCoords)
 		gears.append(playerTilemapCoords)
 		components[playerTilemapCoords].resetTo()
 	elif playerTilemapCoords in components and playerTilemapCoords not in gears:
@@ -144,18 +160,26 @@ func placeGear(playerTilemapCoords: Vector2i) -> void:
 	else:
 		gears.append(playerTilemapCoords)
 		components[playerTilemapCoords] = Component.new()
-	updateGearRendering()
+		
 	updateGearLogic()
+	updateGearRendering()
 
 func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
-		gears.erase(playerTilemapCoords)
+		#gears.erase(playerTilemapCoords)
+		pass
 	elif playerTilemapCoords in components:
-		generators.erase(playerTilemapCoords)
+		#generators.erase(playerTilemapCoords)
+		pass
+	else:
+		pass
+	generators.append(playerTilemapCoords)
+	components[playerTilemapCoords] = Component.new(32, 0, 0, 1)
 	
-	updateGearRendering()
-	updateGearLogic()
 
+	updateGearLogic()
+	updateGearRendering()
+	
 ## @deprecated: Testing purposes only
 func popComponent(position: Vector2i) -> Component:
 	var temp: Component = components[position]
@@ -170,10 +194,12 @@ func clearComponent(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in components:
 		components.erase(playerTilemapCoords)
 	
-	updateGearRendering()
 	updateGearLogic()
+	updateGearRendering()
+
 
 func printTileData(playerPos: Vector2i) -> void: ##press B to print tile data
+	print("components: ", components)
 	if components.has(playerPos):
 		print("Component: " + str(components[playerPos].genID))
 		print("Speed: " + str(components[playerPos].speed) + " Visual Speed: " + str(components[playerPos].visualSpeed) + " Torque: " + str(components[playerPos].torque))
