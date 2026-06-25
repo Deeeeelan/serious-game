@@ -32,7 +32,11 @@ border_color = Color(0.05490196, 0.05490196, 0.08627451, 1)
 unique_name_in_owner = true
 position = Vector2(16, -16)
 zoom = Vector2(2, 2)
-position_smoothing_enabled = true
+limit_left = -2368
+limit_top = -3200
+limit_right = 3392
+limit_bottom = 32
+limit_smoothed = true
 
 [node name="Terrain" type="Node2D" parent="Node2D" unique_id=2117986526]
 
@@ -83,6 +87,14 @@ unique_name_in_owner = true
 position = Vector2(16, -80)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Node2D" unique_id=2017314345]
+
+[node name="CameraBounds" type="Node2D" parent="Node2D" unique_id=1353543262]
+
+[node name="A" type="Node2D" parent="Node2D/CameraBounds" unique_id=124716345]
+position = Vector2(-2368, -3200)
+
+[node name="B" type="Node2D" parent="Node2D/CameraBounds" unique_id=1544235082]
+position = Vector2(3392, 32)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1492406320]
 
