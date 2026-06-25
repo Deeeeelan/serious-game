@@ -207,3 +207,9 @@ func printTileData(playerPos: Vector2i) -> void: ##press B to print tile data
 	if components.has(playerPos):
 		print("Component: " + str(components[playerPos].genID))
 		print("Speed: " + str(components[playerPos].speed) + " Visual Speed: " + str(components[playerPos].visualSpeed) + " Torque: " + str(components[playerPos].torque))
+
+func request_gear_data_at(pos2: Vector2) -> Variant:
+	var pos: Vector2i = componentMap.local_to_map(pos2)
+	if components.has(pos):
+		return components[pos]
+	return

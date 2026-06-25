@@ -234,7 +234,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 
-[node name="GearManager" type="Node" parent="." unique_id=1866319422]
+[node name="GearManager" type="Node" parent="." unique_id=1866319422 groups=["gear_manager"]]
 unique_name_in_owner = true
 script = ExtResource("1_xwrxv")
 

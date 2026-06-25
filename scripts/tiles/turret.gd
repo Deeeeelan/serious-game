@@ -1,8 +1,11 @@
 extends Building
 
 @export var speed: float = 1.0
+@export var bul_cd: float = 1.0
 @export var dmg: int = 25
+var real_dmg: int = dmg
 @export var bullet_speed = 100
+
 
 
 var target_angle: float = 0
@@ -33,6 +36,15 @@ func fire():
 	
 	
 func tick():
+	var data = get_tree().get_first_node_in_group("gear_manager").request_gear_data_at(position)
+	if data and data.speed > 0:
+		if $ShootTick.is_stopped():
+			$ShootTick.start()
+		$ShootTick.wait_time = bul_cd / (data.speed / 5.0)
+		real_dmg = int(dmg * (data.torque / 50.0))
+		
+	else:
+		$ShootTick.stop()
 	var colls = $Range.get_overlapping_bodies()
 	var closest: CharacterBody2D
 	var closest_dist: int = 999999999
@@ -52,6 +64,7 @@ func tick():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
+	$ShootTick.wait_time = bul_cd
 	$ShootTick.wait_time = speed
 	$ShootTick.timeout.connect(fire)
 
