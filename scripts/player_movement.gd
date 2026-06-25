@@ -87,7 +87,8 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			$Aim.texture = img
 			if current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS:
 				print("GEAR")
-				carrying_data.component = gearManager.popComponent(pos)
+				carrying_data.component = true
+				gearManager.clearComonent(pos)
 							
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
@@ -141,7 +142,7 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		await tween.finished
 		throw_obj.queue_free()
 		if "component" in saved_carrying_data:
-			gearManager.placeComponent(saved_carrying_data.component, pos)
+			gearManager.placeGear(pos)
 			print(gearManager.components)
 		
 		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
