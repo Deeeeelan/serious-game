@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c0aj6md3uc23o"]
+
+[ext_resource type="Script" uid="uid://c4i1l3h1182r4" path="res://scripts/enemies/enemy_ranged.gd" id="1_ik7av"]
+[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="2_cdpiw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v65rp"]
+radius = 14.0
+
+[node name="EnemyRanged" type="CharacterBody2D" unique_id=2133284665]
+script = ExtResource("1_ik7av")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=773406025]
+shape = SubResource("CircleShape2D_v65rp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=549149572]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_cdpiw")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1867932693]
+path_max_distance = 256.0
+avoidance_enabled = true
+radius = 16.0
