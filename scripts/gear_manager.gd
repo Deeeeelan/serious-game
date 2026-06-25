@@ -147,7 +147,6 @@ func placeGear(playerTilemapCoords: Vector2i) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
-## @deprecated: Testing purposes only
 func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
@@ -157,12 +156,13 @@ func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	updateGearRendering()
 	updateGearLogic()
 
+## @deprecated: Testing purposes only
 func popComponent(position: Vector2i) -> Component:
 	var temp: Component = components[position]
 	components.erase(position)
 	return temp
 
-func clearComonent(playerTilemapCoords: Vector2i) -> void:
+func clearComponent(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
 	elif playerTilemapCoords in generators:
