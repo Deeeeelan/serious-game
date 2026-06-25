@@ -26,7 +26,8 @@ const MAX_ZOOM := 4.0
 const MIN_ZOOM := 1.0
 
 const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
-
+const GEAR_COORDS = [Vector2i(0, 0), Vector2i(0, 3), Vector2i(0, 6), Vector2i(0, 9), Vector2i(21, 0), Vector2i(21, 3), Vector2i(21, 6)]
+const GEN_COORDS = []
 var animating_tile_pos = {}
 
 @onready var mobdebug = preload("res://assets/mobs/enemy_basic.tscn")
@@ -84,7 +85,10 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			var img = cell_pos_to_texture(tm, pos)
 			$Holding.texture = img
 			$Aim.texture = img
-			gearManager.clearComonent(pos)
+			if current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS:
+				print("GEAR")
+				carrying_data.component = gearManager.popComponent(pos)
+							
 			var source = tm.tile_set.get_source(carrying_data.sid)
 			if source is TileSetScenesCollectionSource:
 				var node = search_scene_at_tile_pos(tm, pos)
@@ -136,6 +140,10 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		tween.play()
 		await tween.finished
 		throw_obj.queue_free()
+		if "component" in saved_carrying_data:
+			gearManager.placeComponent(saved_carrying_data.component, pos)
+			print(gearManager.components)
+		
 		tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
 			
 		var source = tm.tile_set.get_source(saved_carrying_data.sid)

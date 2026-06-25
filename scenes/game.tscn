@@ -58,7 +58,6 @@ tile_set = ExtResource("1_uwrxv")
 
 [node name="GearAndGenMap" type="TileMapLayer" parent="Node2D/Terrain" unique_id=965642568]
 modulate = Color(1, 1, 1, 0.2)
-scale = Vector2(2, 2)
 tile_set = ExtResource("2_dinhu")
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]

@@ -73,7 +73,7 @@ func updateComponent(componentPos: Vector2i, currentGenInfo: Dictionary, current
 
 func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 	@warning_ignore("integer_division")
-	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)/2
+	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)
 
 	if event.is_action_pressed("placeGear"): ##testing version of placing gear
 		placeGear(playerTilemapCoords)
@@ -165,11 +165,10 @@ func popComponent(position: Vector2i) -> Component:
 func clearComonent(playerTilemapCoords: Vector2i) -> void:
 	if playerTilemapCoords in gears:
 		gears.erase(playerTilemapCoords)
-	elif playerTilemapCoords in components:
-		generators.append(playerTilemapCoords)
-	else:
-		generators.append(playerTilemapCoords)
-		components[playerTilemapCoords] = Component.new(32, 10, 50, 3)
+	elif playerTilemapCoords in generators:
+		generators.erase(playerTilemapCoords)
+	if playerTilemapCoords in components:
+		components.erase(playerTilemapCoords)
 	
 	updateGearRendering()
 	updateGearLogic()
