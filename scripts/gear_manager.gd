@@ -95,6 +95,9 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 		
 	if event.is_action_pressed("Debug Tile Data"):
 		printTileData(playerTilemapCoords)
+		
+	if event.is_action_pressed("place_fast_test_gen"):
+		placeFastTestGen(playerTilemapCoords)
 
 func updateGearRendering() -> void:
 	for componentCoords in components:
@@ -181,10 +184,16 @@ func placeTestGen(playerTilemapCoords: Vector2i, genID: int) -> void:
 	generators.append(playerTilemapCoords)
 	components[playerTilemapCoords] = Component.new(32, 0, 0, genID)
 	
-
 	updateGearLogic()
 	updateGearRendering()
-	
+
+func placeFastTestGen(playerTilemapCoords: Vector2i) -> void:
+	generators.append(playerTilemapCoords)
+	components[playerTilemapCoords] = Component.new(32, 0, 0, 2)
+	updateGearLogic()
+	updateGearRendering()
+
+
 ## @deprecated: Testing purposes only
 func popComponent(position: Vector2i) -> Component:
 	var temp: Component = components[position]
