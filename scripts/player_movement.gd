@@ -27,7 +27,7 @@ const MIN_ZOOM := 1.0
 
 const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
 const GEAR_COORDS = [Vector2i(0, 0), Vector2i(0, 3), Vector2i(0, 6), Vector2i(0, 9), Vector2i(21, 0), Vector2i(21, 3), Vector2i(21, 6)]
-const GEN_COORDS = [Vector2i(7, 0)]
+const GEN_COORDS = [Vector2i(7, 0), Vector2i(9, 0), Vector2i(11, 0)]
 var animating_tile_pos = {}
 
 @onready var mobdebug = preload("res://assets/mobs/enemy_basic.tscn")
@@ -149,7 +149,7 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 			gearManager.placeGear(pos)
 			print(gearManager.components)
 		elif saved_carrying_data.atcoords in GEN_COORDS:
-			gearManager.placeTestGen(pos)
+			gearManager.placeTestGen(pos , ((saved_carrying_data.atcoords.x - 7) / 2) + 1)
 		else:
 			tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
 			

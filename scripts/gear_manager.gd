@@ -87,7 +87,11 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 		placeGear(playerTilemapCoords)
 
 	if event.is_action_pressed("placeTestGen"):##testing version of placing generator
-		placeTestGen(playerTilemapCoords)
+		placeTestGen(playerTilemapCoords, 1)
+	if event.is_action_pressed("debug1"):
+		placeTestGen(playerTilemapCoords, 2)
+	if event.is_action_pressed("debug2"):
+		placeTestGen(playerTilemapCoords, 3)
 		
 	if event.is_action_pressed("Debug Tile Data"):
 		printTileData(playerTilemapCoords)
@@ -106,7 +110,8 @@ func updateGearRendering() -> void:
 				@warning_ignore("integer_division")
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.visualSpeed / 5) / log(2))))
 		else:
-			groundMap.set_cell(componentCoords, 0, Vector2i(7, 0))
+			print_debug(component.genID)
+			groundMap.set_cell(componentCoords, 0, Vector2i(7 + ((component.genID - 1) * 2), 0))
 
 func updateGearLogic() -> void:
 	for gearPos in gears:
@@ -164,7 +169,7 @@ func placeGear(playerTilemapCoords: Vector2i) -> void:
 	updateGearLogic()
 	updateGearRendering()
 
-func placeTestGen(playerTilemapCoords: Vector2i) -> void:
+func placeTestGen(playerTilemapCoords: Vector2i, genID: int) -> void:
 	if playerTilemapCoords in gears:
 		#gears.erase(playerTilemapCoords)
 		pass
@@ -174,7 +179,7 @@ func placeTestGen(playerTilemapCoords: Vector2i) -> void:
 	else:
 		pass
 	generators.append(playerTilemapCoords)
-	components[playerTilemapCoords] = Component.new(32, 0, 0, 1)
+	components[playerTilemapCoords] = Component.new(32, 0, 0, genID)
 	
 
 	updateGearLogic()
