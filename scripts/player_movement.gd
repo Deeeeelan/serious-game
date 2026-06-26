@@ -194,7 +194,7 @@ func _input(event: InputEvent) -> void:
 			tween.tween_property(ground_tm, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
 			tween.tween_property(underground_tm, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.2)
 			tween.play()
-	elif event is InputEventMouseButton:
+	elif event is InputEventMouseButton and %Crafting.visible == false:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			if current_zoom < MAX_ZOOM:
 				current_zoom += 0.1
