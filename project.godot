@@ -49,6 +49,8 @@ Debris=""
 Target=""
 gear_manager=""
 game_manager=""
+no_pickup=""
+ground_tm=""
 
 [input]
 

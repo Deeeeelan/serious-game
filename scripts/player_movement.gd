@@ -67,7 +67,7 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 
 # Attempt to carry the tile at pos
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
-	if current_tm.get_cell_source_id(pos) != -1:
+	if current_tm.get_cell_source_id(pos) != -1 and current_tm.get_cell_alternative_tile(pos) != 1:
 		var altcoords = current_tm.get_cell_atlas_coords(pos)
 		if altcoords == Vector2i(1, 3):
 			GameStats.stone += 1
