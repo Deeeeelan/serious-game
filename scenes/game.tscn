@@ -92,6 +92,7 @@ unique_name_in_owner = true
 position = Vector2(16, -80)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Node2D" unique_id=2017314345]
+color = Color(0.6715141, 0.67151415, 0.6715141, 1)
 
 [node name="CameraBounds" type="Node2D" parent="Node2D" unique_id=1353543262]
 
