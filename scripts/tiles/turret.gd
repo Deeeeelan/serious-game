@@ -25,7 +25,7 @@ func fire():
 		if body.is_in_group("Enemy") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
 				tween.stop()
-			body.health -= dmg
+			body.health -= real_dmg
 			bul.queue_free()
 	)
 	tween.play()
