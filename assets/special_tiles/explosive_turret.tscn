@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dbqffsewgagka"]
+
+[ext_resource type="Script" uid="uid://bt2w3ykbcvnc5" path="res://scripts/tiles/explosive_turret.gd" id="1_iacyw"]
+[ext_resource type="Texture2D" uid="uid://bipbhssvt8030" path="res://assets/images/tilemaps/spritemap.png" id="2_xnygy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyf4y"]
+atlas = ExtResource("2_xnygy")
+region = Rect2(224, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b12ix"]
+atlas = ExtResource("2_xnygy")
+region = Rect2(256, 96, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upgfe"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uj6rr"]
+radius = 256.0
+
+[node name="ExplosiveTurret" type="StaticBody2D" unique_id=81970415]
+script = ExtResource("1_iacyw")
+bul_cd = 2.0
+dmg = 15
+max_health = 100
+health = 100
+atlas_texture = Vector2i(7, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=378597880]
+texture = SubResource("AtlasTexture_fyf4y")
+
+[node name="Top" type="Sprite2D" parent="." unique_id=1333109638]
+texture = SubResource("AtlasTexture_b12ix")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=511558034]
+shape = SubResource("RectangleShape2D_upgfe")
+
+[node name="Range" type="Area2D" parent="." unique_id=1356194161]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range" unique_id=47203167]
+shape = SubResource("CircleShape2D_uj6rr")
+
+[node name="Tick" type="Timer" parent="." unique_id=2099922925]
+wait_time = 0.1
+autostart = true
+
+[node name="ShootTick" type="Timer" parent="." unique_id=663616098]
+autostart = true
