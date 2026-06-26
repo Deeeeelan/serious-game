@@ -89,6 +89,16 @@ func _ready() -> void:
 	if GameStats.DEBUG:
 		day_time = 5
 		first_day_time = 8
+	
+	%AMB.volume_db = -80.0
+	%Dark.color = Color(0.0, 0.0, 0.0, 1.0)
+	%AMB.play()
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property(%AMB, "volume_db", 0.0, 2.0)
+	tween.tween_property(%Dark, "color", Color(0.0, 0.0, 0.0, 0.0), 2.0)
+	tween.play()
+	
+	
 	start_cycle()
 	$Timer.timeout.connect(func():
 		time += 1
