@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 signal health_changed(new)
 
+
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
@@ -14,6 +15,7 @@ signal health_changed(new)
 
 var has_target = false
 var bullet = preload("res://assets/nodes/bullet.tscn")
+@onready var shoot_tick: Timer = $ShootTick
 var target_angle: float = 0
 
 func fire():
@@ -25,7 +27,7 @@ func fire():
 	var tween = get_tree().create_tween()
 	tween.tween_property(bul, "position", position + Vector2.RIGHT.rotated($Top.rotation + deg_to_rad(-90)) * 2000, 3.2)
 	bul.body_entered.connect(func(body: Node2D):
-		if body.is_in_group("Buildings") and bul:##TODO: make this damage buildings
+		if body.is_in_group("buildings") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
 				tween.stop()
 			body.health -= damage
@@ -38,12 +40,12 @@ func fire():
 	)
 	
 
-func tick():
+func ShootTick():
 	var colls = $Range.get_overlapping_bodies()
-	var closest: CharacterBody2D
+	var closest: StaticBody2D
 	var closest_dist: int = 999999999
 	for col in colls:
-		if col.is_in_group("Enemy"):
+		if col.is_in_group("buildings"):
 			if (position - col.position).length() < closest_dist:
 				closest_dist = (position - col.position).length()
 				closest = col
@@ -55,7 +57,7 @@ func tick():
 		has_target = false
 
 func _ready() -> void:
-	$DamageTick.timeout.connect(tick)
+	$ShootTick.timeout.connect(ShootTick)
 	health_changed.connect(func(new):
 		if health <= 0:
 			GameStats.gold += gold_dropped

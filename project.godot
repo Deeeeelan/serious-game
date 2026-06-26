@@ -49,6 +49,7 @@ Debris=""
 Target=""
 gear_manager=""
 game_manager=""
+buildings=""
 
 [input]
 
