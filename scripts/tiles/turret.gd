@@ -1,12 +1,10 @@
 extends Building
+class_name Turret
 
-@export var speed: float = 1.0
 @export var bul_cd: float = 1.0
 @export var dmg: int = 25
 var real_dmg: int = dmg
 @export var bullet_speed = 100
-
-
 
 var target_angle: float = 0
 var bullet = preload("res://assets/nodes/bullet.tscn")
@@ -65,7 +63,6 @@ func tick():
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
 	$ShootTick.wait_time = bul_cd
-	$ShootTick.wait_time = speed
 	$ShootTick.timeout.connect(fire)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

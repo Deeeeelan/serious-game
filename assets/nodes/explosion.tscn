@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://8nnyv30olxck"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b12ix"]
+radius = 48.0
+
+[node name="Explosion" type="Area2D" unique_id=2031241674]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ExplosionArea" type="CollisionShape2D" parent="." unique_id=1451303299]
+shape = SubResource("CircleShape2D_b12ix")
