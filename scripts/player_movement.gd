@@ -201,16 +201,16 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			if current_zoom > MIN_ZOOM:
 				current_zoom -= 0.1
-	elif event.is_action_pressed("spawnMobDebug"):
+	elif event.is_action_pressed("spawnMobDebug") and GameStats.DEBUG:
 		var mob = mobdebug.instantiate()
 		mob.position = position + Vector2(0, -32)
 		%Mobs.add_child(mob)
-	elif event.is_action_pressed("timewarpdebug"):
+	elif event.is_action_pressed("timewarpdebug") and GameStats.DEBUG:
 		if Engine.time_scale == 4:
 			Engine.time_scale = 1
 		else:
 			Engine.time_scale = 4
-	elif event.is_action_pressed("debug3"):
+	elif event.is_action_pressed("debug3") and GameStats.DEBUG:
 		GameStats.wood += 9999
 		GameStats.stone += 9999
 		GameStats.iron += 9999

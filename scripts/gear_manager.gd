@@ -83,18 +83,19 @@ func _input(event: InputEvent) -> void: ##method for placing test gear/generator
 	@warning_ignore("integer_division")
 	var playerTilemapCoords: Vector2i = componentMap.local_to_map(player.position)
 
-	if event.is_action_pressed("placeGear"): ##testing version of placing gear
-		placeGear(playerTilemapCoords)
+	if GameStats.DEBUG:
+		if event.is_action_pressed("placeGear"): ##testing version of placing gear
+			placeGear(playerTilemapCoords)
 
-	if event.is_action_pressed("placeTestGen"):##testing version of placing generator
-		placeTestGen(playerTilemapCoords, 1)
-	if event.is_action_pressed("debug1"):
-		placeTestGen(playerTilemapCoords, 2)
-	if event.is_action_pressed("debug2"):
-		placeTestGen(playerTilemapCoords, 3)
-		
-	if event.is_action_pressed("Debug Tile Data"):
-		printTileData(playerTilemapCoords)
+		if event.is_action_pressed("placeTestGen"):##testing version of placing generator
+			placeTestGen(playerTilemapCoords, 1)
+		if event.is_action_pressed("debug1"):
+			placeTestGen(playerTilemapCoords, 2)
+		if event.is_action_pressed("debug2"):
+			placeTestGen(playerTilemapCoords, 3)
+			
+		if event.is_action_pressed("Debug Tile Data"):
+			printTileData(playerTilemapCoords)
 
 func updateGearRendering() -> void:
 	for componentCoords in components:

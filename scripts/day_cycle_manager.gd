@@ -11,8 +11,8 @@ extends Node
 @export var day: int = 0
 @export var is_night: bool = false
 
-@export var first_day_time: int = 8 # 120
-@export var day_time: int = 5 # 60
+@export var first_day_time: int = 120
+@export var day_time: int = 60
 
 var max_mobs : int = 0
 
@@ -32,7 +32,13 @@ const GENERATIONS = [
 		bounds = [-60, 60, 0, -100]
 	},
 ]
-
+func first_night():
+	var tween = get_tree().create_tween()
+	%BGM.volume_db = -80.0
+	%BGM.play()
+	tween.tween_property(%BGM, "volume_db", 0.0, 14.0)
+	tween.play()
+	
 func new_morning():
 	is_night = false
 	current_mobs = 0
@@ -57,6 +63,8 @@ func new_night():
 	$Timer.stop()
 	time = 0
 	current_mobs = 0
+	if day == 1:
+		first_night()
 	if day <= 14:
 		if day not in MobWaves.waves:
 			push_warning("Ran out of waves, pausing, day:", str(day))
@@ -77,6 +85,9 @@ func start_cycle():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if GameStats.DEBUG:
+		day_time = 5
+		first_day_time = 8
 	start_cycle()
 	$Timer.timeout.connect(func():
 		time += 1
