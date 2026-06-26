@@ -170,14 +170,14 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 				sc.health = saved_carrying_data.health
 			
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and %Crafting.visible == false:
 		if not carrying:
 			var tm_pos = ground_tm.local_to_map(position)
 			carry_at_pos(current_tm, tm_pos)
 		else:
 			var thrw_pos = ground_tm.local_to_map(position + get_local_constr_mouse_pos())
 			drop_at_pos(current_tm, thrw_pos)
-	elif event.is_action_pressed("drop"):
+	elif event.is_action_pressed("drop") and %Crafting.visible == false:
 		if carrying:
 			var tm_pos = ground_tm.local_to_map(position)
 			drop_at_pos(current_tm, tm_pos)
@@ -222,7 +222,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Allow for buffer input of throwing
-	if Input.is_action_pressed("interact") and not carrying:
+	if Input.is_action_pressed("interact") and not carrying and %Crafting.visible == false:
 		var tm_pos = ground_tm.local_to_map(position)
 		carry_at_pos(current_tm, tm_pos)
 		
