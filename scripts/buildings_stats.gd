@@ -9,8 +9,13 @@ func tick():
 	if tile and tile.get_script() and (tile.get_script() == Building or tile.get_script().get_base_script() == Building):
 		visible = true
 		value = float(tile.health) / float(tile.max_health)
+		var img = player.cell_pos_to_texture(ground, ground.local_to_map(player.position))
+		$"../TextureRect".texture = img
+		$"../TextureRect".visible = true
 	else:
 		visible = false
+		$"../TextureRect".visible = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

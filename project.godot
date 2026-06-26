@@ -48,6 +48,7 @@ Enemy=""
 Debris=""
 Target=""
 gear_manager=""
+game_manager=""
 
 [input]
 
