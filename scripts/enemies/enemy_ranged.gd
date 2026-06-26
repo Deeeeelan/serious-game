@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var SPEED = 75.0
+@export var SPEED = 95.0
 @export var target: Node2D
 
 signal health_changed(new)
@@ -25,7 +25,7 @@ func fire():
 	bul.position = position
 
 	var tween = get_tree().create_tween()
-	tween.tween_property(bul, "position", position + Vector2.RIGHT.rotated($Top.rotation + deg_to_rad(-90)) * 2000, 3.2)
+	tween.tween_property(bul, "position", position + Vector2.UP.rotated(rotation + deg_to_rad(-90)) * 2000, 3.2)
 	bul.body_entered.connect(func(body: Node2D):
 		if body.is_in_group("buildings") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
@@ -51,10 +51,12 @@ func ShootTick():
 				closest = col
 	if closest:
 		has_target = true
-		var target_position = closest.position + (closest.velocity / 3)
+		var target_position = closest.position
 		target_angle = position.angle_to_point(target_position) + deg_to_rad(90)
 	else:
 		has_target = false
+	if has_target:
+		fire()
 
 func _ready() -> void:
 	$ShootTick.timeout.connect(ShootTick)

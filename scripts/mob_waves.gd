@@ -16,7 +16,12 @@ var waves : Dictionary = {
 		"mobs": [
 			{
 				"path": "res://assets/mobs/enemy_basic.tscn",
-				"count": 5,
+				"count": 3,
+				"delay": 1.0,
+			},
+			{
+				"path": "res://assets/mobs/enemy_ranged.tscn",
+				"count": 2,
 				"delay": 1.0,
 			}
 		],
