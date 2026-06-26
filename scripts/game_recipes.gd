@@ -10,6 +10,21 @@ var pickaxe_recipes: Dictionary = {
 
 # altid must also have id
 var building_recipes: Dictionary = {
+	"gear": {
+		"name": "Gear",
+		"atlas_coords": Vector2i(3, 0),
+		"gear": true,
+		"wood":1,
+	},
+	"turret": {
+		"name": "Turret",
+		"atlas_coords": Vector2i(8, 2),
+		"id": 1,
+		"altid": 7, 
+		"wood": 8,
+		"stone": 8,
+		"gold": 20,
+	},
 	"wood_wall": {
 		"name": "Wood Wall",
 		"atlas_coords": Vector2i(5, 2),
@@ -24,12 +39,28 @@ var building_recipes: Dictionary = {
 		"altid": 5, 
 		"stone": 2,
 	},
-	"iron_wall": {
-		"name": "Iron Wall",
-		"atlas_coords": Vector2i(5, 4),
-		"id": 1,
-		"altid": 6, 
-		"iron": 2,
-		"stone": 3,
+	"gen1": {
+		"name": "Generator 1",
+		"gen": true,
+		"atlas_coords": Vector2i(7, 0),
+		"wood": 10,
+		"stone": 10,
+		"gold": 45,
+	},
+	"gen2": {
+		"name": "Generator 2",
+		"gen": true,
+		"atlas_coords": Vector2i(9, 0),
+		"wood": 20,
+		"stone": 20,
+		"gold": 100,
+	},
+	"gen3": {
+		"name": "Generator 3",
+		"gen": true,
+		"atlas_coords": Vector2i(11, 0),
+		"wood": 30,
+		"stone": 30,
+		"gold": 150,
 	},
 }

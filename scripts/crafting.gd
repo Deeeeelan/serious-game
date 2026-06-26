@@ -2,6 +2,7 @@ extends Control
 
 @onready var player = %Player
 @onready var ground = %Ground
+@onready var gear_manager = %GearManager
 
 var building_section = preload("res://assets/nodes/building_section.tscn")
 
@@ -27,13 +28,21 @@ func _ready() -> void:
 				if mat in recipe and GameStats[mat] < recipe[mat]:
 					can_craft = false
 			if can_craft:
+				if "gen" in recipe:
+					if %GearAndGenMap.get_cell_source_id(player_pos) != -1:
+						return
 				for mat in materials:
 					if mat in recipe:
 						GameStats[mat] -= recipe[mat]
-				if "altid" in recipe:
-					ground.set_cell(player_pos, recipe.id, Vector2i(0, 0), recipe.altid)
+				if "gear" in recipe:
+					gear_manager.placeGear(player_pos)
+				elif "gen" in recipe:
+					gear_manager.placeTestGen(player_pos , ((recipe.atlas_coords.x - 7) / 2) + 1)
 				else:
-					ground.set_cell(player_pos, 0, recipe.atlas_coords)
+					if "altid" in recipe:
+						ground.set_cell(player_pos, recipe.id, Vector2i(0, 0), recipe.altid)
+					else:
+						ground.set_cell(player_pos, 0, recipe.atlas_coords)
 				print("crafted", recipe.name)
 		)
 			

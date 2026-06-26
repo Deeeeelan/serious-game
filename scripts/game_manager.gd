@@ -5,6 +5,7 @@ extends Node
 
 func lose():
 	game_end = true
+	base_health_copy = 0
 	print("lose")
 	
 func win():
@@ -14,3 +15,5 @@ func win():
 func _process(delta: float) -> void:
 	if base_health_copy <= 0 and not game_end:
 		lose()
+func _ready() -> void:
+	%GearManager.placeTestGen(Vector2i(5, -7), 1)

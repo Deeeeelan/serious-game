@@ -210,7 +210,11 @@ func _input(event: InputEvent) -> void:
 			Engine.time_scale = 1
 		else:
 			Engine.time_scale = 4
-		
+	elif event.is_action_pressed("debug3"):
+		GameStats.wood += 9999
+		GameStats.stone += 9999
+		GameStats.iron += 9999
+		GameStats.gold += 9999
 			
 func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()
