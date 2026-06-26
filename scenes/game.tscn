@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://dv4fh0274v1vk" path="res://assets/tile_sets/gear_tile_set.tres" id="2_dinhu"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://cadj3w52pjv1v" path="res://assets/images/BG.png" id="4_rysoc"]
 [ext_resource type="Script" uid="uid://chkqlilwftv4o" path="res://scripts/building_manager.gd" id="5_iywne"]
 [ext_resource type="Script" uid="uid://dvhojv8fc0vmn" path="res://scripts/hud.gd" id="6_gee14"]
 [ext_resource type="Script" uid="uid://cqsoe5748vm10" path="res://scripts/crafting.gd" id="7_kvpfn"]
@@ -15,6 +16,7 @@
 [ext_resource type="Script" uid="uid://ccjxa4st6a0lg" path="res://scripts/health_update.gd" id="10_trtic"]
 [ext_resource type="Script" uid="uid://dhetg3w4efhj8" path="res://scripts/game_manager.gd" id="13_kvuet"]
 [ext_resource type="AudioStream" uid="uid://btmhsdq0l750f" path="res://assets/audio/serious-bgm.mp3" id="15_ir15t"]
+[ext_resource type="AudioStream" uid="uid://cbh4jh8n5c22n" path="res://assets/audio/serious_amb.mp3" id="16_ca42v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sj1v"]
 bg_color = Color(0.05580274, 0.05400385, 0.085979305, 1)
@@ -39,6 +41,7 @@ region = Rect2(0, 0, 32, 32)
 unique_name_in_owner = true
 position = Vector2(16, -16)
 zoom = Vector2(2, 2)
+limit_enabled = false
 limit_left = -2368
 limit_top = -3200
 limit_right = 3392
@@ -111,6 +114,14 @@ position = Vector2(13, -2682)
 
 [node name="B" type="Node2D" parent="Node2D/MobSpawns" unique_id=642026535]
 position = Vector2(2681, -830)
+
+[node name="Parallax2D" type="Parallax2D" parent="Node2D" unique_id=398358399]
+z_index = -2
+repeat_size = Vector2(128, 128)
+repeat_times = 24
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D" unique_id=1106167514]
+texture = ExtResource("4_rysoc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1492406320]
 
@@ -306,6 +317,12 @@ script = ExtResource("13_kvuet")
 unique_name_in_owner = true
 stream = ExtResource("15_ir15t")
 bus = &"BGM"
+
+[node name="AMB" type="AudioStreamPlayer" parent="." unique_id=57370629]
+unique_name_in_owner = true
+stream = ExtResource("16_ca42v")
+autoplay = true
+bus = &"AMB"
 
 [node name="SFX" type="AudioStreamPlayer" parent="." unique_id=659633016]
 bus = &"SFX"
