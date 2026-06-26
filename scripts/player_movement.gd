@@ -67,7 +67,7 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 
 # Attempt to carry the tile at pos
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
-	if current_tm.get_cell_source_id(pos) != -1:
+	if current_tm.get_cell_source_id(pos) != -1 and current_tm.get_cell_alternative_tile(pos) != 1:
 		var altcoords = current_tm.get_cell_atlas_coords(pos)
 		if altcoords == Vector2i(1, 3):
 			GameStats.stone += 1
@@ -194,7 +194,7 @@ func _input(event: InputEvent) -> void:
 			tween.tween_property(ground_tm, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
 			tween.tween_property(underground_tm, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.2)
 			tween.play()
-	elif event is InputEventMouseButton:
+	elif event is InputEventMouseButton and %Crafting.visible == false:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			if current_zoom < MAX_ZOOM:
 				current_zoom += 0.1

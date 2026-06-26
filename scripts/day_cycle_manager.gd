@@ -4,6 +4,7 @@ extends Node
 @onready var center_label = %CenterLabel
 @onready var mobs_node = %Mobs
 @onready var mob_spawns = %MobSpawns
+@onready var ground_tm = %Ground
 
 @export var time: int = 0
 @export var current_mobs: int = 0
@@ -49,7 +50,7 @@ func new_morning():
 		for i in range(gen.max):
 			var pos = Vector2i(randi_range(gen.bounds[0], gen.bounds[1]), randi_range(gen.bounds[2], gen.bounds[3]))
 			var valid = true
-			if terrain_tm.get_cell_source_id(pos) != -1:
+			if terrain_tm.get_cell_source_id(pos) != -1 or ground_tm.get_cell_source_id(pos) != -1:
 				valid = false
 			for safe in SAFE_ZONES:
 				if safe.has_point(pos):

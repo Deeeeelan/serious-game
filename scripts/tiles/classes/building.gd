@@ -10,4 +10,6 @@ class_name Building
 		health = value
 		if value <= 0 and not do_not_die:
 			print("building dead")
+			get_tree().get_first_node_in_group("ground_tm").set_cell(get_tree().get_first_node_in_group("ground_tm").local_to_map(position), -1)
 			queue_free()
+			

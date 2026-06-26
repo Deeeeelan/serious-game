@@ -39,6 +39,20 @@ var building_recipes: Dictionary = {
 		"altid": 5, 
 		"stone": 2,
 	},
+	"axe": {
+		"name": "Axe",
+		"atlas_coords": Vector2i(4, 3),
+		"id": 1,
+		"altid": 2, 
+		"wood": 6,
+	},
+	"pickaxe": {
+		"name": "Pickaxe",
+		"atlas_coords": Vector2i(4, 4),
+		"id": 1,
+		"altid": 3, 
+		"wood": 8,
+	},
 	"gen1": {
 		"name": "Generator 1",
 		"gen": true,

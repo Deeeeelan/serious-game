@@ -50,6 +50,8 @@ Target=""
 gear_manager=""
 game_manager=""
 buildings=""
+no_pickup=""
+ground_tm=""
 
 [input]
 
