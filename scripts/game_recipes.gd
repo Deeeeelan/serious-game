@@ -12,7 +12,7 @@ var pickaxe_recipes: Dictionary = {
 var building_recipes: Dictionary = {
 	"gear": {
 		"name": "Gear",
-		"atlas_coords": Vector2i(3, 0),
+		"atlas_coords": Vector2i(9, 2),
 		"gear": true,
 		"wood":1,
 	},
@@ -56,7 +56,7 @@ var building_recipes: Dictionary = {
 	"gen1": {
 		"name": "Generator 1",
 		"gen": true,
-		"atlas_coords": Vector2i(7, 0),
+		"atlas_coords": Vector2i(10, 2),
 		"wood": 10,
 		"stone": 10,
 		"gold": 45,
@@ -64,7 +64,7 @@ var building_recipes: Dictionary = {
 	"gen2": {
 		"name": "Generator 2",
 		"gen": true,
-		"atlas_coords": Vector2i(9, 0),
+		"atlas_coords": Vector2i(10, 2),
 		"wood": 20,
 		"stone": 20,
 		"gold": 100,
@@ -72,7 +72,7 @@ var building_recipes: Dictionary = {
 	"gen3": {
 		"name": "Generator 3",
 		"gen": true,
-		"atlas_coords": Vector2i(11, 0),
+		"atlas_coords": Vector2i(10, 2),
 		"wood": 30,
 		"stone": 30,
 		"gold": 150,

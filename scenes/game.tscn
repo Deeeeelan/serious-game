@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dhetg3w4efhj8" path="res://scripts/game_manager.gd" id="13_kvuet"]
 [ext_resource type="AudioStream" uid="uid://btmhsdq0l750f" path="res://assets/audio/serious-bgm.mp3" id="15_ir15t"]
 [ext_resource type="AudioStream" uid="uid://cbh4jh8n5c22n" path="res://assets/audio/serious_amb.mp3" id="16_ca42v"]
+[ext_resource type="AudioStream" uid="uid://8qalsru2i8nk" path="res://assets/audio/sfx/ear_ringing_sfx.mp3" id="18_ssvqc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sj1v"]
 bg_color = Color(0.05580274, 0.05400385, 0.085979305, 1)
@@ -163,11 +164,11 @@ theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "[b]Gold:[/b] 0
 [b]Wood:[/b] 0
-[b]Stone:[/b] 0
-[b]Iron:[/b] 0"
+[b]Stone:[/b] 0"
 fit_content = true
 
 [node name="Crafting" type="Button" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=2102880589]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
@@ -296,15 +297,32 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 
-[node name="Dark" type="ColorRect" parent="CanvasLayer" unique_id=1030173081]
+[node name="Dark" type="ColorRect" parent="CanvasLayer/Control" unique_id=1030173081]
 unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+color = Color(1, 1, 1, 0)
+
+[node name="LoseText" type="Label" parent="CanvasLayer/Control" unique_id=328122200]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "you lost..."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="GearManager" type="Node" parent="." unique_id=1866319422 groups=["gear_manager"]]
 unique_name_in_owner = true
@@ -333,4 +351,9 @@ stream = ExtResource("16_ca42v")
 bus = &"AMB"
 
 [node name="SFX" type="AudioStreamPlayer" parent="." unique_id=659633016]
+bus = &"SFX"
+
+[node name="SFX2" type="AudioStreamPlayer" parent="." unique_id=579129031]
+unique_name_in_owner = true
+stream = ExtResource("18_ssvqc")
 bus = &"SFX"

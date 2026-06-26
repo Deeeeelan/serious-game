@@ -9,8 +9,8 @@ func start():
 	if not starting:
 		starting = true
 		var tween = get_tree().create_tween().set_parallel(true)
-		tween.tween_property(%AMB, "volume_db", -80.0, 3.0)
-		tween.tween_property(%Dark, "color", Color(0.0, 0.0, 0.0, 1.0), 3.0)
+		tween.tween_property(%AMB, "volume_db", -80.0, 1.5)
+		tween.tween_property(%Dark, "color", Color(0.0, 0.0, 0.0, 1.0), 1.5)
 		tween.play()
 		await tween.finished
 	
