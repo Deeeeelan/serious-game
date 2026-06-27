@@ -114,8 +114,8 @@ func new_night():
 				spawn_mob("res://assets/mobs/enemy_ranged.tscn", day/7, 1, true)
 			spawn_mob("res://assets/mobs/enemy_basic.tscn", day/7, 1, true)
 		if day >= 14:
-			spawn_mob("res://assets/mobs/enemy_basic.tscn", day, 0.08, false)
-			spawn_mob("res://assets/mobs/enemy_ranged.tscn", day - 4, 0.08, false)
+			spawn_mob("res://assets/mobs/enemy_basic.tscn", day / 2, 0.08, true)
+			spawn_mob("res://assets/mobs/enemy_ranged.tscn", day / 2, 0.08, true)
 
 	
 func start_cycle():
