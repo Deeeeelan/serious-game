@@ -13,6 +13,10 @@ func explosion(location: Vector2):
 	for body in explosionBodies:
 		if body.is_in_group("Enemy"):
 			body.health -= real_dmg
+	get_tree().create_timer(6.0).timeout.connect(func():
+		explosionArea.queue_free()
+		)
+	
 	
 func fire():
 	if not has_target: return
