@@ -4,6 +4,8 @@ const EXPLOSION = preload("res://assets/nodes/explosion.tscn")
 
 func explosion(location: Vector2):
 	var explosionArea = EXPLOSION.instantiate()
+	var explosionTimer = explosionArea.get_node("ParticleTimer")
+	explosionTimer.timeout.connect(func(): explosionArea.queue_free())
 	explosionArea.position = location
 	get_tree().get_first_node_in_group("Debris").add_child(explosionArea)
 	var explosionBodies = explosionArea.get_overlapping_bodies()
@@ -11,7 +13,7 @@ func explosion(location: Vector2):
 	for body in explosionBodies:
 		if body.is_in_group("Enemy"):
 			body.health -= real_dmg
-
+	
 func fire():
 	if not has_target: return
 	var bul = bullet.instantiate()
