@@ -2,17 +2,17 @@ extends CharacterBody2D
 
 @export var SPEED = 100.0
 @export var target: Node2D
-
-signal health_changed()
-
+@export var damage = 10
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
 		health = value
 		health_changed.emit()
-@export var damage = 10
 
 var target_angle: float = 0
+var is_boss: bool = false
+
+signal health_changed()
 
 
 func tick():
@@ -46,8 +46,10 @@ func _ready() -> void:
 			GameStats.current_mobs_defeated += 1
 			queue_free()
 		)
+	
 	if not target:
 		target = get_tree().get_first_node_in_group("Target")
+	print(is_boss)
 
 
 	

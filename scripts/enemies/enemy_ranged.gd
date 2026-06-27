@@ -2,20 +2,20 @@ extends CharacterBody2D
 
 @export var SPEED = 95.0
 @export var target: Node2D
-
-signal health_changed()
-
+@export var damage = 10
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
 		health = value
 		health_changed.emit()
-@export var damage = 10
 
 var has_target = false
+var target_angle: float = 0
+var is_boss: bool = false
 var bullet = preload("res://assets/nodes/bullet.tscn")
 @onready var shoot_tick: Timer = $ShootTick
-var target_angle: float = 0
+
+signal health_changed()
 
 func fire():
 	if not has_target: return
