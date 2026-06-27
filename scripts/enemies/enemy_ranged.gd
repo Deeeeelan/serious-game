@@ -26,9 +26,8 @@ func fire():
 	bul.position = position
 
 	var tween = get_tree().create_tween()
-	tween.tween_property(bul, "position", position + Vector2.UP.rotated(rotation + deg_to_rad(-90)) * 2000, 3.2)
+	tween.tween_property(bul, "position", position + Vector2.UP.rotated(rotation) * 2000, 3.2)
 	bul.body_entered.connect(func(body: Node2D):
-		print(body.is_in_group("buildings"))
 		if body.is_in_group("buildings") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
 				tween.stop()
@@ -42,7 +41,7 @@ func fire():
 	)
 	
 
-func ShootTick():
+func aimTick():
 	var colls = $Range.get_overlapping_bodies()
 	var closest: StaticBody2D
 	var closest_dist: int = 999999999
@@ -54,13 +53,17 @@ func ShootTick():
 	if closest:
 		has_target = true
 		var target_position = closest.position
-		target_angle = position.angle_to_point(target_position) + deg_to_rad(90)
+		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
 	else:
 		has_target = false
+
+func ShootTick():
+
 	if has_target:
 		fire()
 
 func _ready() -> void:
+	$AimTick.timeout.connect(aimTick)
 	$ShootTick.timeout.connect(ShootTick)
 	health_changed.connect(func(new):
 		if health <= 0:
@@ -75,6 +78,7 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	rotation = lerp_angle(rotation, target_angle, 0.1)
 	if target:
 		velocity = position.direction_to(target.position) * SPEED
 	move_and_slide()

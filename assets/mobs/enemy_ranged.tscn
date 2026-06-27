@@ -18,7 +18,6 @@ script = ExtResource("1_ik7av")
 shape = SubResource("CircleShape2D_v65rp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=549149572]
-rotation = 2.560398
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_cdpiw")
 
@@ -35,4 +34,8 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_b12ix")
 
 [node name="ShootTick" type="Timer" parent="." unique_id=153244677]
+autostart = true
+
+[node name="AimTick" type="Timer" parent="." unique_id=2105582055]
+wait_time = 0.1
 autostart = true

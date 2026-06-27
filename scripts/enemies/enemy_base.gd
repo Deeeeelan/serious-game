@@ -12,6 +12,8 @@ signal health_changed(new)
 		health_changed.emit(health)
 @export var damage = 10
 
+var target_angle: float = 0
+
 
 func tick():
 	var bodies = $Area2D.get_overlapping_bodies()
@@ -20,7 +22,23 @@ func tick():
 		if script and (script == Building or script.get_base_script() == Building):
 			body.health -= damage
 
+func aimTick():
+	var colls = $Range.get_overlapping_bodies()
+	var closest: StaticBody2D
+	var closest_dist: int = 999999999
+	for col in colls:
+		if col.is_in_group("buildings"):
+			if (position - col.position).length() < closest_dist:
+				closest_dist = (position - col.position).length()
+				closest = col
+	if closest:
+		var target_position = closest.position
+		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
+
+
 func _ready() -> void:
+
+	$AimTick.timeout.connect(aimTick)
 	$DamageTick.timeout.connect(tick)
 	health_changed.connect(func(new):
 		if health <= 0:
@@ -35,6 +53,8 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	rotation = lerp_angle(rotation, target_angle, 0.1)
+
 	if target:
 		velocity = position.direction_to(target.position) * SPEED
 	move_and_slide()

@@ -13,3 +13,6 @@ class_name Building
 			get_tree().get_first_node_in_group("ground_tm").set_cell(get_tree().get_first_node_in_group("ground_tm").local_to_map(position), -1)
 			queue_free()
 			
+
+func _ready() -> void:
+	add_to_group("buildings")

@@ -36,3 +36,7 @@ collision_mask = 3
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1395076235]
 shape = SubResource("CircleShape2D_8tn5n")
+
+[node name="AimTick" type="Timer" parent="." unique_id=1953212713]
+wait_time = 0.1
+autostart = true
