@@ -1,7 +1,52 @@
 [gd_scene format=3 uid="uid://8nnyv30olxck"]
 
+[ext_resource type="Texture2D" uid="uid://0bhres5mdw6j" path="res://assets/images/explosion_particle.png" id="1_hx60i"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_b12ix"]
 radius = 48.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj0ol"]
+atlas = ExtResource("1_hx60i")
+region = Rect2(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_8o8hn"]
+offsets = PackedFloat32Array(0, 0.365, 0.8, 1)
+colors = PackedColorArray(1, 0.33333334, 0.08235294, 1, 1, 0.8535444, 0.47279984, 1, 0.97937816, 0.85326874, 0.66965115, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_imx38"]
+gradient = SubResource("Gradient_8o8hn")
+
+[sub_resource type="Curve" id="Curve_hkmg8"]
+_limits = [-500.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0.017699115, 50), 0.0, 0.0, 0, 0, Vector2(0.48672563, -500), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_tj0ol"]
+curve = SubResource("Curve_hkmg8")
+
+[sub_resource type="Curve" id="Curve_qojv3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9955752, 0.44943827), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fkjjg"]
+curve = SubResource("Curve_qojv3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b12ix"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 24.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+linear_accel_curve = SubResource("CurveTexture_tj0ol")
+damping_max = 100.00001
+scale_min = 8.0
+scale_max = 16.0
+scale_curve = SubResource("CurveTexture_fkjjg")
+scale_over_velocity_max = 1000.0
+color_ramp = SubResource("GradientTexture1D_imx38")
 
 [node name="Explosion" type="Area2D" unique_id=2031241674]
 collision_layer = 2
@@ -9,3 +54,11 @@ collision_mask = 2
 
 [node name="ExplosionArea" type="CollisionShape2D" parent="." unique_id=1451303299]
 shape = SubResource("CircleShape2D_b12ix")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1409745250]
+amount = 64
+texture = SubResource("AtlasTexture_tj0ol")
+lifetime = 1.5
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_b12ix")
