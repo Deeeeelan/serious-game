@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Serious Game"
+config/name="Cognitive Stress"
 run/main_scene="uid://dbjxrtbe8nvgs"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://assets/placeholders/icon.svg"
+config/icon="uid://dfj312qugubx2"
 
 [audio]
 

@@ -9,7 +9,8 @@ var stone: int = 0
 var gold: int = 0
 var iron: int = 0
 
-var DEBUG = true
+var DEBUG = false
 
 func _ready() -> void:
-	push_warning("RUNNING DEBUG")
+	if DEBUG:
+		push_warning("RUNNING DEBUG")
