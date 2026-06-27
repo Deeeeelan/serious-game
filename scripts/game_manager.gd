@@ -54,3 +54,7 @@ func _process(delta: float) -> void:
 		lose()
 func _ready() -> void:
 	%GearManager.placeTestGen(Vector2i(5, -7), 1)
+	%GearManager.placeGear(Vector2i(2, -6))
+	%GearManager.placeGear(Vector2i(3, -6))
+	%GearManager.placeGear(Vector2i(4, -6))
+	%GearManager.placeGear(Vector2i(5, -6))
