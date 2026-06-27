@@ -88,12 +88,12 @@ var waves : Dictionary = {
 		],
 	},
 	6: {
-		"total": 35,
+		"total": 30,
 		"mobs": [
 			{
 				"path": "res://assets/mobs/enemy_ranged.tscn",
-				"count": 35,
-				"delay": 0.05,
+				"count": 30,
+				"delay": 0.2,
 			}
 		],
 	},

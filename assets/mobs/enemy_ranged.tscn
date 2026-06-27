@@ -24,8 +24,6 @@ shape = SubResource("CircleShape2D_v65rp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=549149572]
 texture = SubResource("AtlasTexture_f21e8")
-region_enabled = true
-region_rect = Rect2(32, 0, 32, 32)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1867932693]
 path_max_distance = 256.0

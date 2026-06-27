@@ -54,7 +54,7 @@ func _ready() -> void:
 						ground.set_cell(player_pos, recipe.id, Vector2i(0, 0), recipe.altid)
 					else:
 						ground.set_cell(player_pos, 0, recipe.atlas_coords)
-				print("crafted", recipe.name)
+				#print("crafted", recipe.name)
 		)
 			
 		

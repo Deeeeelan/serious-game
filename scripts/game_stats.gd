@@ -9,7 +9,7 @@ var stone: int = 0
 var gold: int = 0
 var iron: int = 0
 
-var DEBUG = false
+var DEBUG = true
 
 func _ready() -> void:
 	if DEBUG:

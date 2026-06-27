@@ -10,11 +10,12 @@ extends Node
 @export var time: int = 0
 @export var current_mobs: int = 0
 
-@export var day: int = 0
+@export var day: int = 7
 @export var is_night: bool = false
 
 @export var first_day_time: int = 120
 @export var day_time: int = 60
+var endless_total:int = 0
 
 var day_color = Color("#d4d4d4")
 var night_color = Color("#636363")
@@ -106,6 +107,15 @@ func new_night():
 				mobs_node.add_child(mob_ent)
 				await get_tree().create_timer(mob.delay).timeout
 	else:
+		endless_total = (day * 2) + (day * 2 - 4)
+		if day % 3 == 0 or day >= 14:
+			if day % 2 == 0 or day >= 14:
+				endless_total += day / 7
+			endless_total += day / 7
+		if day >= 14:
+			endless_total += day / 2
+			endless_total += day / 2
+		max_mobs = endless_total
 		spawn_mob("res://assets/mobs/enemy_basic.tscn", day * 2, 0.4, false)
 		spawn_mob("res://assets/mobs/enemy_ranged.tscn", day * 2 - 4, 0.5, false)
 		if day % 3 == 0 or day >= 14:

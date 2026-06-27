@@ -40,7 +40,7 @@ func fire():
 	)
 
 func aimTick():
-	if abs(position.x) >= 80000 or abs(position.y) >= 80000:
+	if abs(position.x) >= 6000 or abs(position.y) >= 6000:
 		queue_free()
 	var colls = $Range.get_overlapping_bodies()
 	var closest: StaticBody2D
@@ -81,7 +81,7 @@ func _ready() -> void:
 		health *= 8
 		damage *= 2
 		speed *= 0.8
-		$Sprite2D.region_rect = Rect2($Sprite2D.region_rect.position.x + 64, $Sprite2D.region_rect.position.y, $Sprite2D.region_rect.size.x, $Sprite2D.region_rect.size.y)
+		modulate = Color(0.463, 0.388, 0.471, 1.0)
 
 func _physics_process(delta: float) -> void:
 	rotation = lerp_angle(rotation, target_angle, 0.1)
