@@ -28,7 +28,10 @@ func _ready() -> void:
 		button.pressed.connect(func():
 			var player_pos = ground.local_to_map(player.position)
 			var can_craft = true
-			can_craft = player.valid_player_drop_pos(ground, player_pos)
+			if "gear" in recipe:
+				can_craft = %GearAndGenMap.get_cell_source_id(player_pos) == -1 and ground.get_cell_atlas_coords(player_pos) not in player.GEN_COORDS
+			else:
+				can_craft = player.valid_player_drop_pos(ground, player_pos)
 			for mat in materials:
 				if mat in recipe and GameStats[mat] < recipe[mat]:
 					can_craft = false
