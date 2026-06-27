@@ -36,7 +36,18 @@ func lose():
 	
 func win():
 	game_end = true
+	var new_pos : Vector2 = %Player.position + Vector2(0, -200)
+	%WinParticles.position = new_pos
+	%WinParticles.emitting = true
+	%WinScreen.visible = true
 	print("win")
+	%WinScreen.get_node("VBoxContainer/Endless").pressed.connect(func():
+		%WinScreen.visible = false
+	)
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug2"):
+		win()
 
 func _process(delta: float) -> void:
 	if base_health_copy <= 0 and not game_end:

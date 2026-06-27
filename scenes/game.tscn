@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://cadj3w52pjv1v" path="res://assets/images/BG.png" id="4_rysoc"]
+[ext_resource type="Texture2D" uid="uid://0bhres5mdw6j" path="res://assets/images/explosion_particle.png" id="5_264po"]
 [ext_resource type="Script" uid="uid://chkqlilwftv4o" path="res://scripts/building_manager.gd" id="5_iywne"]
 [ext_resource type="Script" uid="uid://dvhojv8fc0vmn" path="res://scripts/hud.gd" id="6_gee14"]
 [ext_resource type="Script" uid="uid://cqsoe5748vm10" path="res://scripts/crafting.gd" id="7_kvpfn"]
@@ -18,6 +19,34 @@
 [ext_resource type="AudioStream" uid="uid://btmhsdq0l750f" path="res://assets/audio/serious-bgm.mp3" id="15_ir15t"]
 [ext_resource type="AudioStream" uid="uid://cbh4jh8n5c22n" path="res://assets/audio/serious_amb.mp3" id="16_ca42v"]
 [ext_resource type="AudioStream" uid="uid://8qalsru2i8nk" path="res://assets/audio/sfx/ear_ringing_sfx.mp3" id="18_ssvqc"]
+
+[sub_resource type="Gradient" id="Gradient_264po"]
+offsets = PackedFloat32Array(0, 0.6825095, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_37s47"]
+gradient = SubResource("Gradient_264po")
+
+[sub_resource type="Curve" id="Curve_1kice"]
+_data = [Vector2(0, 0.6530613), 0.0, 0.0, 0, 0, Vector2(0.2837838, 1), 0.0, 0.0, 0, 0, Vector2(0.50337833, 0.81632656), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_8tn5n"]
+curve = SubResource("Curve_1kice")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6sj1v"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 140.0
+initial_velocity_min = 50.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 98, 0)
+scale_min = 8.0
+scale_max = 25.0
+scale_curve = SubResource("CurveTexture_8tn5n")
+color_ramp = SubResource("GradientTexture1D_37s47")
+hue_variation_min = -1.0
+hue_variation_max = 0.99999994
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sj1v"]
 bg_color = Color(0.05580274, 0.05400385, 0.085979305, 1)
@@ -37,6 +66,7 @@ region = Rect2(0, 0, 32, 32)
 [node name="Game" type="Node" unique_id=384866855]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=348159224]
+unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="Node2D" unique_id=1746627479]
 unique_name_in_owner = true
@@ -125,9 +155,22 @@ repeat_times = 24
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D" unique_id=1106167514]
 texture = ExtResource("4_rysoc")
 
+[node name="WinParticles" type="GPUParticles2D" parent="Node2D" unique_id=1792622984]
+unique_name_in_owner = true
+z_index = 4
+emitting = false
+amount = 128
+texture = ExtResource("5_264po")
+lifetime = 5.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_6sj1v")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1492406320]
+unique_name_in_owner = true
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1859199551]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -216,6 +259,60 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Crafting/ScrollContainer" unique_id=1488418985]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="WinScreen" type="Control" parent="CanvasLayer/Control" unique_id=1268239860]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.4
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Control/WinScreen" unique_id=1904003027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vtaks")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/WinScreen" unique_id=1418498839]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/WinScreen/VBoxContainer" unique_id=1771102200]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "You Win!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/WinScreen/VBoxContainer" unique_id=1241490420]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="Endless" type="Button" parent="CanvasLayer/Control/WinScreen/VBoxContainer" unique_id=672915475]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "Endless mode"
 
 [node name="Control" type="Control" parent="CanvasLayer/Control" unique_id=1281968669]
 layout_mode = 1

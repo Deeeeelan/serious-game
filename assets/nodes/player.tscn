@@ -1,9 +1,74 @@
 [gd_scene format=3 uid="uid://jxarvf6cmbq4"]
 
 [ext_resource type="Script" uid="uid://baocvcmb0aqeb" path="res://scripts/player_movement.gd" id="1_sysx0"]
-[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="2_y07ac"]
+[ext_resource type="Texture2D" uid="uid://eoomr6j1q38a" path="res://assets/images/player-full.png" id="2_sysx0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y07ac"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb2t1"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn4l5"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rho1b"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcpvn"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ut8nu"]
+atlas = ExtResource("2_sysx0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6sj1v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y07ac")
+}],
+"loop": 1,
+"name": &"idle_hold",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb2t1")
+}],
+"loop": 1,
+"name": &"idle_none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn4l5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rho1b")
+}],
+"loop": 1,
+"name": &"move_hold",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcpvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ut8nu")
+}],
+"loop": 1,
+"name": &"move_none",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
 
@@ -24,9 +89,9 @@ script = ExtResource("1_sysx0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1406786638]
 shape = SubResource("CircleShape2D_8tn5n")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1501482814]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_y07ac")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1221946090]
+sprite_frames = SubResource("SpriteFrames_6sj1v")
+animation = &"idle_hold"
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="." unique_id=529309522]
 remote_path = NodePath("../../Camera2D")

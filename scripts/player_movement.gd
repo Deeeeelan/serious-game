@@ -18,7 +18,7 @@ var carrying_data
 
 const TILE_SIZE = 32
 const SPEED = 320.0
-const LERP_SPEED = 0.08
+const LERP_SPEED = 0.2
 const THROW_RANGE = 128
 
 @onready var current_zoom = camera.zoom.x
@@ -29,6 +29,8 @@ const CARDINAL_2i_DIRS = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vecto
 const GEAR_COORDS = [Vector2i(0, 0), Vector2i(0, 3), Vector2i(0, 6), Vector2i(0, 9), Vector2i(21, 0), Vector2i(21, 3), Vector2i(21, 6)]
 const GEN_COORDS = [Vector2i(7, 0), Vector2i(9, 0), Vector2i(11, 0)]
 var animating_tile_pos = {}
+
+var moving = false
 
 @onready var mobdebug = preload("res://assets/mobs/enemy_ranged.tscn")
 
@@ -212,7 +214,10 @@ func _input(event: InputEvent) -> void:
 		GameStats.stone += 9999
 		GameStats.iron += 9999
 		GameStats.gold += 9999
-			
+
+func _ready() -> void:
+	$Sprite.play("idle_none")
+
 func _process(delta: float) -> void:
 	$Aim.position = get_local_constr_mouse_pos()
 	camera.zoom = lerp(camera.zoom, Vector2.ONE * current_zoom, 0.1)
@@ -225,6 +230,11 @@ func _physics_process(delta: float) -> void:
 		
 	
 	var direction := Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized()
+	if direction.length() > 0:
+		$Sprite.animation = "move_" + ("hold" if carrying else "none")
+	elif direction.length() == 0:
+		$Sprite.play("idle_" + ("hold" if carrying else "none"))
+		
 	velocity = lerp(velocity, direction * SPEED, LERP_SPEED)
 
 	move_and_slide()

@@ -55,6 +55,8 @@ func new_morning():
 	$Timer.start()
 	time = 0
 	day += 1
+	if day == 8:
+		%GameManager.win()
 	for gen in GENERATIONS:
 		for i in range(gen.max):
 			var pos = Vector2i(randi_range(gen.bounds[0], gen.bounds[1]), randi_range(gen.bounds[2], gen.bounds[3]))
