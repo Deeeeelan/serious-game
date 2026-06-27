@@ -19,7 +19,7 @@ var carrying_data
 const TILE_SIZE = 32
 const SPEED = 320.0
 const LERP_SPEED = 0.2
-const THROW_RANGE = 128
+const THROW_RANGE = 160
 
 @onready var current_zoom = camera.zoom.x
 const MAX_ZOOM := 4.0
@@ -32,6 +32,9 @@ var animating_tile_pos = {}
 
 var moving = false
 
+const TOOL_PARTICLES = preload("res://assets/particles/tool.tscn")
+
+const PLACE_PARTICLES = preload("res://assets/particles/place.tscn")
 @onready var mobdebug = preload("res://assets/mobs/enemy_ranged.tscn")
 
 # Gets the mouse pos in constraint to throw range
@@ -71,15 +74,22 @@ func cell_pos_to_texture(tm: TileMapLayer, tm_pos: Vector2i) -> Texture:
 func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if current_tm.get_cell_source_id(pos) != -1 and current_tm.get_cell_alternative_tile(pos) != 1:
 		var altcoords = current_tm.get_cell_atlas_coords(pos)
+		var pickup = false
+		var carry = false
 		if altcoords == Vector2i(1, 3):
 			GameStats.stone += 1
+			pickup = true
 		elif altcoords == Vector2i(1, 4):
 			GameStats.wood += 1
+			pickup = true
 		elif altcoords == Vector2i(1,6):
 			GameStats.iron += 1
+			pickup = true
 		elif altcoords == Vector2i(1,7):
 			GameStats.gold += 1
-		else:
+			pickup = true
+		elif not carrying:
+			carry = true
 			carrying = true
 			carrying_data = {
 				atcoords = current_tm.get_cell_atlas_coords(pos),
@@ -100,13 +110,22 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 				var node = search_scene_at_tile_pos(tm, pos)
 				if node and node.get_script() and (node.get_script() == Building or node.get_script().get_base_script() == Building):
 					carrying_data.health = node.health
-		tm.set_cell(pos, -1)
+		if pickup or carry:
+			tm.set_cell(pos, -1)
 
 # Assumes that all terrain will only have collidable objects
 func valid_player_drop_pos(add_tm: TileMapLayer, pos: Vector2i) -> bool:
 	return add_tm.get_cell_source_id(pos) == -1  and terrain_tm.get_cell_source_id(pos) == -1 and ground_tm.get_cell_atlas_coords(pos) not in GEN_COORDS
 		
 func use_tool(tool: String, pos: Vector2i):
+	var tp = TOOL_PARTICLES.instantiate()
+	tp.position = current_tm.map_to_local(pos)
+	%Debris.add_child(tp)
+	tp.emitting = true
+	tp.get_node("xaxis").emitting = true
+	get_tree().create_timer(1.5).timeout.connect(func():
+		tp.queue_free()
+	)
 	for dir in CARDINAL_2i_DIRS:
 		var new_pos = pos + dir
 		var altcoords = terrain_tm.get_cell_atlas_coords(new_pos)
@@ -154,7 +173,13 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 			gearManager.placeTestGen(pos , ((saved_carrying_data.atcoords.x - 7) / 2) + 1)
 		else:
 			tm.set_cell(pos, saved_carrying_data.sid, saved_carrying_data.atcoords, saved_carrying_data.altid)
-			
+		var pp = PLACE_PARTICLES.instantiate() # hillarious abbrv.
+		pp.position = tm.map_to_local(pos)
+		pp.emitting = true
+		get_tree().create_timer(1.5).timeout.connect(func():
+			pp.queue_free()
+		)
+		%Debris.add_child(pp)
 		var source = tm.tile_set.get_source(saved_carrying_data.sid)
 		if source is TileSetScenesCollectionSource:
 			var scene = source.get_scene_tile_scene(saved_carrying_data.altid).instantiate()
@@ -227,7 +252,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Allow for buffer input of throwing
-	if Input.is_action_pressed("interact") and not carrying and %Crafting.visible == false:
+	if Input.is_action_pressed("interact") and %Crafting.visible == false:
 		var tm_pos = ground_tm.local_to_map(position)
 		carry_at_pos(current_tm, tm_pos)
 		

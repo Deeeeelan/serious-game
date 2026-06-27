@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://lhl6jnng30o2" path="res://scripts/gear_manager.gd" id="1_xwrxv"]
 [ext_resource type="TileSet" uid="uid://dv4fh0274v1vk" path="res://assets/tile_sets/gear_tile_set.tres" id="2_dinhu"]
 [ext_resource type="PackedScene" uid="uid://jxarvf6cmbq4" path="res://assets/nodes/player.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://v1ms8tyr1ec6" path="res://assets/particles/place.tscn" id="3_1kice"]
 [ext_resource type="Theme" uid="uid://bfk8m25hg0afo" path="res://assets/themes/default_theme.tres" id="3_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://cadj3w52pjv1v" path="res://assets/images/BG.png" id="4_rysoc"]
 [ext_resource type="Texture2D" uid="uid://0bhres5mdw6j" path="res://assets/images/explosion_particle.png" id="5_264po"]
@@ -107,6 +108,9 @@ tile_set = ExtResource("1_uwrxv")
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.2)
 tile_set = ExtResource("2_dinhu")
+
+[node name="Place" parent="Node2D/Terrain" unique_id=397242895 instance=ExtResource("3_1kice")]
+position = Vector2(-185, -84)
 
 [node name="Mobs" type="Node2D" parent="Node2D" unique_id=302977151]
 unique_name_in_owner = true

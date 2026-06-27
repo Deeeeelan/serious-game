@@ -14,8 +14,8 @@ size = Vector2(32, 32)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_8lno1")
-max_health = 75
-health = 75
+max_health = 125
+health = 125
 atlas_texture = Vector2i(5, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742097956]
