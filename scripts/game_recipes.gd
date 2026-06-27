@@ -65,7 +65,7 @@ var building_recipes: Dictionary = {
 	"gen1": {
 		"name": "Generator 1",
 		"gen": true,
-		"atlas_coords": Vector2i(10, 2),
+		"atlas_coords": Vector2i(7, 0),
 		"wood": 10,
 		"stone": 10,
 		"gold": 45,
@@ -73,7 +73,7 @@ var building_recipes: Dictionary = {
 	"gen2": {
 		"name": "Generator 2",
 		"gen": true,
-		"atlas_coords": Vector2i(10, 2),
+		"atlas_coords": Vector2i(9, 0),
 		"wood": 20,
 		"stone": 20,
 		"gold": 100,
@@ -81,7 +81,7 @@ var building_recipes: Dictionary = {
 	"gen3": {
 		"name": "Generator 3",
 		"gen": true,
-		"atlas_coords": Vector2i(10, 2),
+		"atlas_coords": Vector2i(11, 0),
 		"wood": 30,
 		"stone": 30,
 		"gold": 150,

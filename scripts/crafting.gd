@@ -18,7 +18,10 @@ func _ready() -> void:
 		var new_gui = building_section.instantiate()
 		var texture: AtlasTexture = new_gui.get_node("TextureRect").texture.duplicate()
 		new_gui.get_node("TextureRect").texture = texture
-		texture.region = Rect2(recipe.atlas_coords[0] * 32, recipe.atlas_coords[1] * 32, 32, 32)
+		if "gen" in recipe:
+			texture.region = Rect2(10 * 32, 2 * 32, 32, 32)
+		else:
+			texture.region = Rect2(recipe.atlas_coords[0] * 32, recipe.atlas_coords[1] * 32, 32, 32)
 		var desc = "%s\n" % [recipe.name]
 		for mat in materials:
 			if mat in recipe:

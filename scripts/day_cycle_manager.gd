@@ -5,6 +5,7 @@ extends Node
 @onready var mobs_node = %Mobs
 @onready var mob_spawns = %MobSpawns
 @onready var ground_tm = %Ground
+@onready var canvas_mod = %CanvasModulate
 
 @export var time: int = 0
 @export var current_mobs: int = 0
@@ -14,6 +15,11 @@ extends Node
 
 @export var first_day_time: int = 120
 @export var day_time: int = 60
+
+var day_color = Color("#d4d4d4")
+var night_color = Color("#636363")
+var night2_color = Color("#3b2f2a")
+
 
 var max_mobs : int = 0
 
@@ -43,6 +49,9 @@ func first_night():
 func new_morning():
 	is_night = false
 	current_mobs = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(canvas_mod, "color", day_color, 4.0)
+	tween.play()
 	$Timer.start()
 	time = 0
 	day += 1
@@ -64,9 +73,12 @@ func new_night():
 	$Timer.stop()
 	time = 0
 	current_mobs = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(canvas_mod, "color", night2_color if day % 7 == 0 else night_color, 4.0)
+	tween.play()
 	if day == 1:
 		first_night()
-	if day <= 14:
+	if day <= 7:
 		if day not in MobWaves.waves:
 			push_warning("Ran out of waves, pausing, day:", str(day))
 			return
@@ -102,7 +114,7 @@ func _ready() -> void:
 	start_cycle()
 	$Timer.timeout.connect(func():
 		time += 1
-		center_label.text = str((first_day_time if day == 1 else day_time) - time)
+		center_label.text = "Day " + str(day) + "\n" + str((first_day_time if day == 1 else day_time) - time)
 		if (day == 1 and time > first_day_time) or (day != 1 and time > day_time):
 			new_night()
 		)
@@ -114,7 +126,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if is_night:
-		center_label.text = str(mobs_node.get_child_count()) + " Mob" + ("" if mobs_node.get_child_count() == 1 else "s")+" Left"
+		center_label.text = "Day " + str(day) + "\n" + str(mobs_node.get_child_count()) + " Mob" + ("" if mobs_node.get_child_count() == 1 else "s")+" Left"
 		if current_mobs >= max_mobs:
 			current_mobs = 0
 			new_morning()
