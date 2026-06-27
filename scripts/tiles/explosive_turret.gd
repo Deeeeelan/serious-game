@@ -7,15 +7,13 @@ func explosion(location: Vector2):
 	var explosionTimer = explosionArea.get_node("ParticleTimer")
 	explosionTimer.timeout.connect(func(): explosionArea.queue_free())
 	explosionArea.position = location
+	explosionArea.get_node("GPUParticles2D").emitting = true
 	get_tree().get_first_node_in_group("Debris").call_deferred("add_child", explosionArea)
+	await get_tree().create_timer(0.075).timeout
 	var explosionBodies = explosionArea.get_overlapping_bodies()
-	
 	for body in explosionBodies:
 		if body.is_in_group("Enemy"):
 			body.health -= real_dmg
-	get_tree().create_timer(6.0).timeout.connect(func():
-		explosionArea.queue_free()
-		)
 	
 	
 func fire():

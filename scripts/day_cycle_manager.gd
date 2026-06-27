@@ -106,16 +106,16 @@ func new_night():
 				mobs_node.add_child(mob_ent)
 				await get_tree().create_timer(mob.delay).timeout
 	else:
-		spawn_mob("res://assets/mobs/enemy_basic.tscn", day * 2, 0.1, false)
-		spawn_mob("res://assets/mobs/enemy_ranged.tscn", day * 2 - 4, 0.2, false)
+		spawn_mob("res://assets/mobs/enemy_basic.tscn", day * 2, 0.4, false)
+		spawn_mob("res://assets/mobs/enemy_ranged.tscn", day * 2 - 4, 0.5, false)
 		if day % 3 == 0 or day >= 14:
 			await get_tree().create_timer(5.0).timeout
 			if day % 2 == 0 or day >= 14:
 				spawn_mob("res://assets/mobs/enemy_ranged.tscn", day/7, 1, true)
 			spawn_mob("res://assets/mobs/enemy_basic.tscn", day/7, 1, true)
 		if day >= 14:
-			spawn_mob("res://assets/mobs/enemy_basic.tscn", day, 0.08, false)
-			spawn_mob("res://assets/mobs/enemy_ranged.tscn", day - 4, 0.08, false)
+			spawn_mob("res://assets/mobs/enemy_basic.tscn", day / 2, 0.6, true)
+			spawn_mob("res://assets/mobs/enemy_ranged.tscn", day / 2, 0.6, true)
 
 	
 func start_cycle():

@@ -56,9 +56,11 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_b12ix")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1409745250]
+emitting = false
 amount = 64
 texture = SubResource("AtlasTexture_tj0ol")
 lifetime = 1.5
+one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_b12ix")

@@ -54,6 +54,8 @@ func aimTick():
 		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
 	else:
 		has_target = false
+		target_angle = velocity.angle() + deg_to_rad(90)
+
 
 func ShootTick():
 
