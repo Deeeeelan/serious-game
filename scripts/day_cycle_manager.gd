@@ -89,6 +89,10 @@ func new_night():
 		for mob in day_data.mobs:
 			for i in range(mob.count): # i cant spell instantiate
 				var mob_ent : CharacterBody2D = load(mob.path).instantiate()
+				if mob.has("boss"):
+					if mob["boss"] != 0:
+						mob_ent.is_boss = true
+						mob["boss"] -= 1
 				mob_ent.position = mob_spawns.get_children()[randi_range(0, mob_spawns.get_child_count() - 1)].position
 				mobs_node.add_child(mob_ent)
 				await get_tree().create_timer(mob.delay).timeout

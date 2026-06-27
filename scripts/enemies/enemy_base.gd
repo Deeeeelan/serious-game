@@ -2,17 +2,17 @@ extends CharacterBody2D
 
 @export var SPEED = 100.0
 @export var target: Node2D
-
-signal health_changed(new)
-
+@export var damage = 10
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
 		health = value
-		health_changed.emit(health)
-@export var damage = 10
+		health_changed.emit()
 
 var target_angle: float = 0
+var is_boss: bool = false
+
+signal health_changed()
 
 
 func tick():
@@ -34,22 +34,22 @@ func aimTick():
 	if closest:
 		var target_position = closest.position
 		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
-	else:
-		target_angle = velocity.angle() + deg_to_rad(90)
 
 
 func _ready() -> void:
 
 	$AimTick.timeout.connect(aimTick)
 	$DamageTick.timeout.connect(tick)
-	health_changed.connect(func(new):
+	health_changed.connect(func():
 		if health <= 0:
 			GameStats.gold += gold_dropped
 			GameStats.current_mobs_defeated += 1
 			queue_free()
 		)
+	
 	if not target:
 		target = get_tree().get_first_node_in_group("Target")
+	print(is_boss)
 
 
 	

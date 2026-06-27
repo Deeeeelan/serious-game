@@ -2,21 +2,20 @@ extends CharacterBody2D
 
 @export var SPEED = 95.0
 @export var target: Node2D
-
-signal health_changed(new)
-
-
+@export var damage = 10
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
 		health = value
-		health_changed.emit(health)
-@export var damage = 10
+		health_changed.emit()
 
 var has_target = false
+var target_angle: float = 0
+var is_boss: bool = false
 var bullet = preload("res://assets/nodes/bullet.tscn")
 @onready var shoot_tick: Timer = $ShootTick
-var target_angle: float = 0
+
+signal health_changed()
 
 func fire():
 	if not has_target: return
@@ -39,7 +38,6 @@ func fire():
 		if bul:
 			bul.queue_free()
 	)
-	
 
 func aimTick():
 	var colls = $Range.get_overlapping_bodies()
@@ -65,7 +63,7 @@ func ShootTick():
 func _ready() -> void:
 	$AimTick.timeout.connect(aimTick)
 	$ShootTick.timeout.connect(ShootTick)
-	health_changed.connect(func(new):
+	health_changed.connect(func():
 		if health <= 0:
 			GameStats.gold += gold_dropped
 			GameStats.current_mobs_defeated += 1
@@ -73,11 +71,6 @@ func _ready() -> void:
 		)
 	if not target:
 		target = get_tree().get_first_node_in_group("Target")
-	else:
-		target_angle = velocity.angle() + deg_to_rad(90)
-
-
-	
 
 func _physics_process(delta: float) -> void:
 	rotation = lerp_angle(rotation, target_angle, 0.1)
