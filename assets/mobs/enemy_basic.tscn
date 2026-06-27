@@ -8,7 +8,6 @@ radius = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
 atlas = ExtResource("2_baiir")
-region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
 radius = 16.0
@@ -31,6 +30,8 @@ shape = SubResource("CircleShape2D_kvpfn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858054830]
 texture = SubResource("AtlasTexture_6sj1v")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=252335325]
 path_max_distance = 256.0

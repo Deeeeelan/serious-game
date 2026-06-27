@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var SPEED = 95.0
+@export var speed = 95.0
 @export var target: Node2D
 @export var damage = 10
 @export var gold_dropped: int
@@ -69,11 +69,18 @@ func _ready() -> void:
 			GameStats.current_mobs_defeated += 1
 			queue_free()
 		)
+
 	if not target:
 		target = get_tree().get_first_node_in_group("Target")
+		
+	if is_boss:
+		health *= 5
+		damage *= 2
+		speed *= 0.8
+		$Sprite2D.region_rect = Rect2($Sprite2D.region_rect.position.x + 64, $Sprite2D.region_rect.position.y, $Sprite2D.region_rect.size.x, $Sprite2D.region_rect.size.y)
 
 func _physics_process(delta: float) -> void:
 	rotation = lerp_angle(rotation, target_angle, 0.1)
 	if target:
-		velocity = position.direction_to(target.position) * SPEED
+		velocity = position.direction_to(target.position) * speed
 	move_and_slide()
