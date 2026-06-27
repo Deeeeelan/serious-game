@@ -18,6 +18,8 @@ size = Vector2(32, 32)
 radius = 256.0
 
 [node name="ExplosiveTurret" type="StaticBody2D" unique_id=81970415]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_iacyw")
 bul_cd = 2.0
 dmg = 15

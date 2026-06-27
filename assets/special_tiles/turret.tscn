@@ -21,12 +21,7 @@ radius = 256.0
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_aema3")
-speed = null
-bul_cd = null
-dmg = null
-bullet_speed = null
 max_health = 100
-do_not_die = null
 health = 100
 atlas_texture = Vector2i(7, 2)
 

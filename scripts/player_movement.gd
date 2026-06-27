@@ -30,7 +30,7 @@ const GEAR_COORDS = [Vector2i(0, 0), Vector2i(0, 3), Vector2i(0, 6), Vector2i(0,
 const GEN_COORDS = [Vector2i(7, 0), Vector2i(9, 0), Vector2i(11, 0)]
 var animating_tile_pos = {}
 
-@onready var mobdebug = preload("res://assets/mobs/enemy_basic.tscn")
+@onready var mobdebug = preload("res://assets/mobs/enemy_ranged.tscn")
 
 # Gets the mouse pos in constraint to throw range
 func get_local_constr_mouse_pos() -> Vector2:

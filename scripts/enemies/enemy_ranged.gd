@@ -21,12 +21,14 @@ var target_angle: float = 0
 func fire():
 	if not has_target: return
 	var bul = bullet.instantiate()
+	
 	get_tree().get_first_node_in_group("Debris").add_child(bul)
 	bul.position = position
 
 	var tween = get_tree().create_tween()
 	tween.tween_property(bul, "position", position + Vector2.UP.rotated(rotation + deg_to_rad(-90)) * 2000, 3.2)
 	bul.body_entered.connect(func(body: Node2D):
+		print(body.is_in_group("buildings"))
 		if body.is_in_group("buildings") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
 				tween.stop()

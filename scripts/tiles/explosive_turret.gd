@@ -7,7 +7,7 @@ func explosion(location: Vector2):
 	var explosionTimer = explosionArea.get_node("ParticleTimer")
 	explosionTimer.timeout.connect(func(): explosionArea.queue_free())
 	explosionArea.position = location
-	get_tree().get_first_node_in_group("Debris").add_child(explosionArea)
+	get_tree().get_first_node_in_group("Debris").call_deferred("add_child", explosionArea)
 	var explosionBodies = explosionArea.get_overlapping_bodies()
 	
 	for body in explosionBodies:
@@ -26,7 +26,7 @@ func fire():
 		if body.is_in_group("Enemy") and bul:
 			if tween.is_running(): # deleting a node with a tween is playing throws a vague error
 				tween.stop()
-			explosion(bul.location)
+			explosion(bul.position)
 			bul.queue_free()
 	)
 	tween.play()
