@@ -126,6 +126,9 @@ func use_tool(tool: String, pos: Vector2i):
 # Attempt to drop the tile at pos
 func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 	if valid_player_drop_pos(tm, pos) and not pos in animating_tile_pos:
+		if carrying_data.atcoords in GEN_COORDS:
+			if %GearAndGenMap.get_cell_source_id(pos) != -1:
+				return
 		carrying = false
 		animating_tile_pos[pos] = true
 		var saved_carrying_data = carrying_data
