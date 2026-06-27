@@ -34,8 +34,9 @@ func aimTick():
 	if closest:
 		var target_position = closest.position
 		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
-
-
+	else:
+		target_angle = velocity.angle() + deg_to_rad(90)
+		
 func _ready() -> void:
 
 	$AimTick.timeout.connect(aimTick)
