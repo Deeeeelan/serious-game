@@ -8,7 +8,12 @@ var building_section = preload("res://assets/nodes/building_section.tscn")
 
 var materials = ["wood", "stone", "iron", "gold"]
 
+var menu_open = false
+var animating = false
+
 func _ready() -> void:
+	anchor_left = -0.225
+	anchor_right = 0
 	for recipe in GameRecipes.building_recipes.values():
 		var new_gui = building_section.instantiate()
 		var texture: AtlasTexture = new_gui.get_node("TextureRect").texture.duplicate()
@@ -52,7 +57,21 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
-		if visible:
-			visible = false
-		else:
-			visible = true
+		if not animating:
+			animating = true
+			var tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+			if menu_open:
+				menu_open = false
+				tween.tween_property(self, "anchor_left", -0.225, 0.2)
+				tween.tween_property(self, "anchor_right", 0, 0.2)
+
+			else:
+				menu_open = true
+				visible = true
+				tween.tween_property(self, "anchor_left", 0.0, 0.2)
+				tween.tween_property(self, "anchor_right", 0.225, 0.2)
+			tween.play()
+			await tween.finished
+			visible = menu_open
+
+			animating = false

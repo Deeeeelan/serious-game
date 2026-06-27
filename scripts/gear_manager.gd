@@ -38,8 +38,8 @@ class Component: ##use visual speed when rendering components
 # Starts from generator?
 func findAndUpdateConnectedComponents(startPoint: Vector2i, genID: int) -> void: #TODO: add gear ratios/different gear sizes
 	var componentStack: Array[Vector2i] = [startPoint]
+	
 	var index: int = 0
-	print("SEARCHING", startPoint)
 	
 	while componentStack.size() > index:
 		# Special case for gear directly under gen

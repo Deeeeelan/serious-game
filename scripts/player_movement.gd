@@ -88,7 +88,6 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			$Holding.texture = img
 			$Aim.texture = img
 			if current_tm == %GearAndGenMap and (current_tm.get_cell_atlas_coords(pos) in GEAR_COORDS or current_tm.get_cell_atlas_coords(pos) in GEN_COORDS):
-				print("GEAR")
 				carrying_data.component = true
 				gearManager.clearComponent(pos)
 			elif carrying_data.atcoords in GEN_COORDS:
@@ -98,7 +97,6 @@ func carry_at_pos(tm: TileMapLayer, pos: Vector2i):
 			if source is TileSetScenesCollectionSource:
 				var node = search_scene_at_tile_pos(tm, pos)
 				if node and node.get_script() and (node.get_script() == Building or node.get_script().get_base_script() == Building):
-					print(node.health)
 					carrying_data.health = node.health
 		tm.set_cell(pos, -1)
 
@@ -147,7 +145,6 @@ func drop_at_pos(tm: TileMapLayer, pos: Vector2i):
 		throw_obj.queue_free()
 		if "component" in saved_carrying_data:
 			gearManager.placeGear(pos)
-			print(gearManager.components)
 		elif saved_carrying_data.atcoords in GEN_COORDS:
 			gearManager.placeTestGen(pos , ((saved_carrying_data.atcoords.x - 7) / 2) + 1)
 		else:
