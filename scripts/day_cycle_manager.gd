@@ -70,6 +70,15 @@ func new_morning():
 			if valid:
 				terrain_tm.set_cell(pos, 0, gen.tile)
 
+func spawn_mob(path: String, amt: int, delay: float, boss: bool):
+	for i in range(amt): # i cant spell instantiate
+		var mob_ent : CharacterBody2D = load(path).instantiate()
+		if boss:
+			mob_ent.is_boss = true
+		mob_ent.position = mob_spawns.get_children()[randi_range(0, mob_spawns.get_child_count() - 1)].position
+		mobs_node.add_child(mob_ent)
+		await get_tree().create_timer(delay).timeout
+
 func new_night():
 	is_night = true
 	$Timer.stop()
@@ -96,7 +105,18 @@ func new_night():
 				mob_ent.position = mob_spawns.get_children()[randi_range(0, mob_spawns.get_child_count() - 1)].position
 				mobs_node.add_child(mob_ent)
 				await get_tree().create_timer(mob.delay).timeout
-				
+	else:
+		spawn_mob("res://assets/mobs/enemy_basic.tscn", day * 2, 0.1, false)
+		spawn_mob("res://assets/mobs/enemy_ranged.tscn", day * 2 - 4, 0.2, false)
+		if day % 3 == 0 or day >= 14:
+			await get_tree().create_timer(5.0).timeout
+			if day % 2 == 0 or day >= 14:
+				spawn_mob("res://assets/mobs/enemy_ranged.tscn", day/7, 1, true)
+			spawn_mob("res://assets/mobs/enemy_basic.tscn", day/7, 1, true)
+		if day >= 14:
+			spawn_mob("res://assets/mobs/enemy_basic.tscn", day, 0.08, false)
+			spawn_mob("res://assets/mobs/enemy_ranged.tscn", day - 4, 0.08, false)
+
 	
 func start_cycle():
 	new_morning()
