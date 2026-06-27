@@ -40,6 +40,8 @@ func fire():
 	)
 
 func aimTick():
+	if abs(position.x) >= 80000 or abs(position.y) >= 80000:
+		queue_free()
 	var colls = $Range.get_overlapping_bodies()
 	var closest: StaticBody2D
 	var closest_dist: int = 999999999
@@ -76,7 +78,7 @@ func _ready() -> void:
 		target = get_tree().get_first_node_in_group("Target")
 		
 	if is_boss:
-		health *= 5
+		health *= 8
 		damage *= 2
 		speed *= 0.8
 		$Sprite2D.region_rect = Rect2($Sprite2D.region_rect.position.x + 64, $Sprite2D.region_rect.position.y, $Sprite2D.region_rect.size.x, $Sprite2D.region_rect.size.y)
