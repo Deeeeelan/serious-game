@@ -25,6 +25,15 @@ var building_recipes: Dictionary = {
 		"stone": 8,
 		"gold": 20,
 	},
+	"explosive_turret": {
+		"name": "Explosive Turret",
+		"atlas_coords": Vector2i(8, 3),
+		"id": 1,
+		"altid": 8, 
+		"wood": 12,
+		"stone": 18,
+		"gold": 40,
+	},
 	"wood_wall": {
 		"name": "Wood Wall",
 		"atlas_coords": Vector2i(5, 2),

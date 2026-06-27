@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bjvcxkkbx2gtu" path="res://assets/special_tiles/stone_wall.tscn" id="6_fq5vj"]
 [ext_resource type="PackedScene" uid="uid://cthx7u3eckawq" path="res://assets/special_tiles/iron_wall.tscn" id="7_mhblv"]
 [ext_resource type="PackedScene" uid="uid://bdlcw5csomjip" path="res://assets/special_tiles/turret.tscn" id="8_fq5vj"]
+[ext_resource type="PackedScene" uid="uid://dbqffsewgagka" path="res://assets/special_tiles/explosive_turret.tscn" id="9_mhblv"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fq5vj"]
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -142,6 +143,8 @@ texture_region_size = Vector2i(32, 32)
 11:0/0 = 0
 9:2/0 = 0
 10:2/0 = 0
+8:3/0 = 0
+7:3/0 = 0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_hxdb4"]
 scenes/1/scene = ExtResource("2_5seww")
@@ -151,6 +154,7 @@ scenes/4/scene = ExtResource("5_pc11y")
 scenes/5/scene = ExtResource("6_fq5vj")
 scenes/6/scene = ExtResource("7_mhblv")
 scenes/7/scene = ExtResource("8_fq5vj")
+scenes/8/scene = ExtResource("9_mhblv")
 
 [resource]
 tile_size = Vector2i(32, 32)
