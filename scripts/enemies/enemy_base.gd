@@ -3,13 +3,13 @@ extends CharacterBody2D
 @export var SPEED = 100.0
 @export var target: Node2D
 
-signal health_changed(new)
+signal health_changed()
 
 @export var gold_dropped: int
 @export var health: int = 100:
 	set(value):
 		health = value
-		health_changed.emit(health)
+		health_changed.emit()
 @export var damage = 10
 
 var target_angle: float = 0
@@ -34,15 +34,13 @@ func aimTick():
 	if closest:
 		var target_position = closest.position
 		target_angle = target_position.angle_to_point(position) + deg_to_rad(-90)
-	else:
-		target_angle = velocity.angle() + deg_to_rad(90)
 
 
 func _ready() -> void:
 
 	$AimTick.timeout.connect(aimTick)
 	$DamageTick.timeout.connect(tick)
-	health_changed.connect(func(new):
+	health_changed.connect(func():
 		if health <= 0:
 			GameStats.gold += gold_dropped
 			GameStats.current_mobs_defeated += 1
