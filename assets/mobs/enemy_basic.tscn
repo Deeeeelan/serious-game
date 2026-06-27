@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://bfx5feg0u1bvi"]
 
 [ext_resource type="Script" uid="uid://dqsgbb0ardokf" path="res://scripts/enemies/enemy_base.gd" id="1_baiir"]
-[ext_resource type="Texture2D" uid="uid://dru5adtvp16qx" path="res://assets/placeholders/icon.svg" id="2_f21e8"]
+[ext_resource type="Texture2D" uid="uid://to50803ijee6" path="res://assets/images/mobs.png" id="2_baiir"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kvpfn"]
 radius = 14.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sj1v"]
+atlas = ExtResource("2_baiir")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tn5n"]
 radius = 16.0
@@ -26,8 +30,7 @@ autostart = true
 shape = SubResource("CircleShape2D_kvpfn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858054830]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_f21e8")
+texture = SubResource("AtlasTexture_6sj1v")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=252335325]
 path_max_distance = 256.0

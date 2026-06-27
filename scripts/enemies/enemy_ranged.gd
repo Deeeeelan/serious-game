@@ -73,6 +73,8 @@ func _ready() -> void:
 		)
 	if not target:
 		target = get_tree().get_first_node_in_group("Target")
+	else:
+		target_angle = velocity.angle() + deg_to_rad(90)
 
 
 	
