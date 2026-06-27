@@ -68,14 +68,14 @@ func _input(event: InputEvent) -> void:
 			var tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 			if menu_open:
 				menu_open = false
-				tween.tween_property(self, "anchor_left", -0.225, 0.2)
+				tween.tween_property(self, "anchor_left", -0.25, 0.2)
 				tween.tween_property(self, "anchor_right", 0, 0.2)
 
 			else:
 				menu_open = true
 				visible = true
 				tween.tween_property(self, "anchor_left", 0.0, 0.2)
-				tween.tween_property(self, "anchor_right", 0.225, 0.2)
+				tween.tween_property(self, "anchor_right", 0.25, 0.2)
 			tween.play()
 			await tween.finished
 			visible = menu_open

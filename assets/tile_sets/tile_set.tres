@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bp45aeselprvr" path="res://assets/special_tiles/pickaxe.tscn" id="4_u3kwe"]
 [ext_resource type="PackedScene" uid="uid://7dv4xb5ro31i" path="res://assets/special_tiles/wood_wall.tscn" id="5_pc11y"]
 [ext_resource type="PackedScene" uid="uid://bjvcxkkbx2gtu" path="res://assets/special_tiles/stone_wall.tscn" id="6_fq5vj"]
-[ext_resource type="PackedScene" uid="uid://cthx7u3eckawq" path="res://assets/special_tiles/iron_wall.tscn" id="7_mhblv"]
+[ext_resource type="PackedScene" uid="uid://cthx7u3eckawq" path="res://assets/special_tiles/sturdy_wall.tscn" id="7_mhblv"]
 [ext_resource type="PackedScene" uid="uid://bdlcw5csomjip" path="res://assets/special_tiles/turret.tscn" id="8_fq5vj"]
 [ext_resource type="PackedScene" uid="uid://dbqffsewgagka" path="res://assets/special_tiles/explosive_turret.tscn" id="9_mhblv"]
 

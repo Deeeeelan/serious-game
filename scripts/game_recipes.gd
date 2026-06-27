@@ -48,6 +48,14 @@ var building_recipes: Dictionary = {
 		"altid": 5, 
 		"stone": 2,
 	},
+	"sturdy_wall": {
+		"name": "Sturdy Wall",
+		"atlas_coords": Vector2i(5, 4),
+		"id": 1,
+		"altid": 6, 
+		"wood": 6,
+		"stone": 8,
+	},
 	"axe": {
 		"name": "Axe",
 		"atlas_coords": Vector2i(4, 3),
