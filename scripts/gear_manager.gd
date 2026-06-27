@@ -111,7 +111,7 @@ func updateGearRendering() -> void:
 				@warning_ignore("integer_division")
 				componentMap.set_cell(componentCoords, 0, Vector2i(0, int(3 * log(component.visualSpeed / 5) / log(2))))
 		else:
-			print_debug(component.genID)
+			# print_debug(component.genID)
 			groundMap.set_cell(componentCoords, 0, Vector2i(7 + ((component.genID - 1) * 2), 0))
 
 func updateGearLogic() -> void:
