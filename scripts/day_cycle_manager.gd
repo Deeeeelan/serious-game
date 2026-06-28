@@ -10,7 +10,7 @@ extends Node
 @export var time: int = 0
 @export var current_mobs: int = 0
 
-@export var day: int = 7
+@export var day: int = 0
 @export var is_night: bool = false
 
 @export var first_day_time: int = 120
